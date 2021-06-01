@@ -6013,6 +6013,11 @@ react-native-render-html@^5.1.0:
     prop-types "^15.7.2"
     stringify-entities "^3.1.0"
 
+react-native-restart@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/react-native-restart/-/react-native-restart-0.0.22.tgz#81fcb7f31e35951d85410c68b9556acf3ab88705"
+  integrity sha512-XwCqAMAKsO8yCM3xACPFKvkDQZe41lcavOuO0gUEu803IuTLtciualCq/qs83ryRDCDh1jkXYRqFjsGjLMCN3Q==
+
 react-native-safe-area-context@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz#06113c6b208f982d68ab5c3cebd199ca93db6941"
@@ -6029,6 +6034,11 @@ react-native-screens@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.3.0.tgz#d4464a96620b85d09e46bd6865b5f48456c244f0"
   integrity sha512-ni11jC6I9cFVXdLIDwkgafDHw/STXUNzkR5Fx3w8Wikdzi8gfTEan2kiOm7aS42d2F/LXddZ6i74Z2em0L6LPQ==
+
+react-native-share@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-6.2.0.tgz#a7669aec7e9d998743e57676f3b2b73956aa4231"
+  integrity sha512-8s5WNaUP8HImy08SzbwRx7RMgGSYZjNWeOiPNVZhyIY/YKRBQEUxEF7ewsmRY4PAtg8Yytb5DYGtCs4S/04ScA==
 
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"

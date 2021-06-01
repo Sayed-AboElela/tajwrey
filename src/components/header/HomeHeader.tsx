@@ -50,9 +50,9 @@ const HomeHeader: FC<NavigationProps & IHeader> = ({
 
         <View style={styles.centerContainer}>
           <Input
-            textInputContainer={{ height: Pixel(60) , fontSize: Pixel(25),}}
-            rightContent={() => <SearchSubmitBtn />}
-            iconRightStyle={{ top: 4, right: 10, }}
+            textInputContainer={{ height: Pixel(60) ,padding:0, fontSize: Pixel(25),}}
+            // rightContent={() => <SearchSubmitBtn />}
+            // iconRightStyle={{ top: 4, right: 10, }}
             options={{
               value: state.searchKeyword,
               onChangeText: value => {

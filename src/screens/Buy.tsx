@@ -9,6 +9,8 @@ import {Colors, ColorWithOpacity, Fonts, Pixel} from "../constants/styleConstant
 import CheckBox from "../components/CheckBox";
 import {DropdownArrowIcon} from "../assets/icons/SvgIcons";
 import {commonStyles} from "../styles/styles";
+import {LoginHandler} from "../store/actions/auth";
+import Button from "../components/touchables/Button";
 
 const Buy: FC = () => {
   const {t} = useTranslation();
@@ -34,7 +36,16 @@ const Buy: FC = () => {
     }
   ]
 
-
+  const submitHandler = () => {
+    setstate(old => ({...old, loader: true}));
+    console.log(state, ' state');
+    // dispatch(
+    //   LoginHandler(state.phone, state.password, success => {
+    //     setstate(old => ({...old, loader: false}));
+    //     success && navigate('Home');
+    //   }, () => navigate("PhoneCode")),
+    // );
+  };
   const commissionSourceOptions = useMemo(() => commission_source.map((item, index) => (
     <CheckBox
       {...item}
@@ -119,6 +130,14 @@ const Buy: FC = () => {
             // erorrMessage={InputErrorHandler(loginErrors, 'phone')}
           />
         </View>
+
+        <Button
+          title={t('Confirmation')}
+          onPress={submitHandler}
+          loader={state.loader}
+          style={{marginBottom:20}}
+        />
+
         <View style={[styles.inputContainer, {justifyContent: 'center', alignItems: 'center'}]}>
           <Text style={styles.termsText}>{t('Your confirmation of the order means your approval')}</Text>
           <TouchableOpacity>

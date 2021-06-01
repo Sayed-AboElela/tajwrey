@@ -22,7 +22,9 @@ const Success = () => {
     phone: '',
     password: '',
   });
-
+  const submitHandler = () => {
+    navigate('Login')
+  }
   console.log('loginErrors', loginErrors)
   return (
     <Container>
@@ -40,7 +42,7 @@ const Success = () => {
         <View style={styles.submitContainer}>
           <Button
             title={t('Login')}
-            // onPress={submitHandler}
+            onPress={submitHandler}
             loader={state.loader}
           />
         </View>

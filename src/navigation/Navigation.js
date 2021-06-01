@@ -25,6 +25,7 @@ import Terms from "../screens/content/Terms";
 import ContactUs from "../screens/ContactUs";
 import Privacy from "../screens/content/Privacy";
 import Faq from "../screens/content/Faq";
+import Onboarding from "../screens/Onboarding";
 
 const Stack = createStackNavigator();
 const navigationTransition = {
@@ -98,11 +99,11 @@ const Stacks = () => {
         return {headerShown: false, ...navigationTransition};
       }}
       initialRouteName={
-        isLogin ? 'Home' : !onboarding ? 'Home' : 'Home'
+        isLogin ? 'Home' : !onboarding ? 'Onboarding' : 'Login'
       }
     >
       <Stack.Screen name="Home" component={Home} options={{...TabsAnimation}}/>
-      {/*<Stack.Screen name="Onboarding" component={Onboarding}/>*/}
+      <Stack.Screen name="Onboarding" component={Onboarding}/>
       <Stack.Screen name="Login" component={Login}/>
       <Stack.Screen name="Register" component={Register}/>
       <Stack.Screen name="Forget" component={Forget}/>

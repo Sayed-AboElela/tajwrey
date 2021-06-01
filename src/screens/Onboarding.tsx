@@ -1,11 +1,12 @@
 import React, {FC, useRef, useState} from 'react';
-import {Dimensions, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
-import {Colors, Fonts, Images, Pixel, ScreenOptions,} from '../constants/styleConstants';
+import {Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {Colors, Fonts, Pixel, ScreenOptions,} from '../constants/styleConstants';
 import {ScreenProps} from '../constants/interfaces';
 import {Onboarding1, Onboarding2,} from '../assets/icons/SvgIcons';
 import Button from '../components/touchables/Button';
 import Animated from 'react-native-reanimated';
 import {SvgProps} from 'react-native-svg';
+import {useTranslation} from "react-i18next";
 
 const {width} = Dimensions.get('window');
 
@@ -17,24 +18,23 @@ interface ISlide {
 }
 
 const Onboarding: FC<ScreenProps> = ({navigation}) => {
+  const {t} = useTranslation();
+
   const data = useState([
     {
       Icon: Onboarding1,
-      title: 'What is Lorem Ipsum?',
-      description:
-        'Simply dummy text of the printing and typesetting industry ever since the 1500s',
+      title: t('We provide brokerage services'),
+      description: t("Mediation between the two parties until the purchase is confirmed in full")
     },
     {
       Icon: Onboarding2,
-      title: 'What is Lorem Ipsum?',
-      description:
-        'Simply dummy text of the printing and typesetting industry ever since the 1500s',
+      title: t("Facilitate and ensure buying and selling"),
+      description: t("An intermediate electronic platform between both the seller and the buyer")
     },
     {
       Icon: Onboarding1,
-      title: 'What is Lorem Ipsum?',
-      description:
-        'Simply dummy text of the printing and typesetting industry ever since the 1500s',
+      title: t("Building trust between clients"),
+      description: t("Build trust among customers to complete and expand their purchases")
     },
   ])[0];
 
@@ -51,11 +51,11 @@ const Onboarding: FC<ScreenProps> = ({navigation}) => {
                 animated: true,
               });
             }}>
-            <Text style={styles.skipButtonText}>Skip</Text>
+            <Text style={styles.skipButtonText}>{t('Skip')}</Text>
           </TouchableOpacity>
         )}
 
-        <View style={[styles.imageBox, index === 1 && {marginEnd: Pixel(65),}]}>
+        <View style={[styles.imageBox,]}>
           <Icon width={'100%'} height={'100%'}/>
         </View>
 
@@ -97,7 +97,7 @@ const Onboarding: FC<ScreenProps> = ({navigation}) => {
             zIndex: 150,
           }}>
             <Button
-              title="GET STARTED"
+              title={t("GET STARTED")}
               onPress={() => {
                 navigation?.navigate('Login');
               }}

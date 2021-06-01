@@ -1,0 +1,6 @@
+module Pods_tajwrey_tajwreyTests {
+  umbrella header "Pods-tajwrey-tajwreyTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

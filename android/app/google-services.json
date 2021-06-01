@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "332830545261",
+    "project_id": "tajwrey",
+    "storage_bucket": "tajwrey.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332830545261:android:423e74e1c51a2f7670b664",
+        "android_client_info": {
+          "package_name": "com.tasawk.tajwrey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332830545261-raqlk8vbd4v0sv5jha68r2jp321s12tb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLlFfnM7oYEHxdLDlKes36DKqWY3xjpnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "332830545261-raqlk8vbd4v0sv5jha68r2jp321s12tb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "332830545261-9sfudkk9fs889do2bsnufuju4sjprp7c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tasawk.tajwrey"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

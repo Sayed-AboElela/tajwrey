@@ -8,6 +8,7 @@ const initialState = {
   cities: [],
   banners: [],
   contacts: [],
+  pages: [],
   contactsUsErrors: {},
 };
 export default (state = initialState, action: IReduser) => {
@@ -24,6 +25,8 @@ export default (state = initialState, action: IReduser) => {
       return {...state, contacts: action.payload};
     case ActionType.SAVE_CONTACTUS_ERRORS:
       return {...state, contactsUsErrors: action.payload};
+    case ActionType.SAVE_PAGES:
+      return {...state, pages: action.payload};
     case ActionType.TOGGLE_LOADER:
       return {...state, preloaderVisible: action.payload};
 

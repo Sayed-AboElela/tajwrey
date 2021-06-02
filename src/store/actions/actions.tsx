@@ -21,4 +21,5 @@ export enum ActionType {
   SAVE_CONTACTS,
   SAVE_CONTACTUS_ERRORS,
   SAVE_BANNERS,
+  SAVE_PAGES,
 }

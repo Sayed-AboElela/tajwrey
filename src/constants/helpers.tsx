@@ -152,6 +152,13 @@ export const OpenUrlHandler = async (url: string): Promise<void> => {
   }
 };
 
+export const getPageBySlug = async (slug: string, pages: any) => {
+  let page;
+  if (slug !== '' && pages.length > 0) {
+    page = pages.filter((page: { slug: string }) => page.slug === slug);
+  }
+  return page;
+};
 /**
  * handel requests errors
  * @param errorMessage response error message

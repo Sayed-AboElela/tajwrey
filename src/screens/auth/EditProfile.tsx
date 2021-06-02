@@ -59,11 +59,11 @@ const EditProfile: FC = () => {
           quality: 0.5,
         },
         response => {
-          // console.log('responsepicImageHandler', response.assets[0].uri);
+          // console.log('responsepicImageHandler', response.assets[0].base64);
           setstate((old: any) => ({
             ...old,
             image: response.assets[0].uri,
-            avatar: response.base64,
+            avatar: response.assets[0].base64,
           }));
         },
       );
@@ -81,8 +81,9 @@ const EditProfile: FC = () => {
         state.phone,
         state.email,
         state.avatar,
-        () => {
+        (success) => {
           setstate(old => ({...old, loader: false}));
+          // success&&
         },
       ),
     );

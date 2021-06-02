@@ -2,7 +2,7 @@ import {Dispatch} from 'redux';
 import {axiosAPI} from '../../constants/Config';
 import {IDispatch} from '../../constants/interfaces';
 import {ActionType} from './actions';
-import {AsyncKeys, clear, saveItem} from '../../constants/helpers';
+import {AsyncKeys, clear, getItem, saveItem} from '../../constants/helpers';
 import {showMessage} from 'react-native-flash-message';
 import RNRestart from 'react-native-restart';
 
@@ -131,31 +131,45 @@ export const LoginHandler = (
 
 export const updateProfile = (
   name: string,
+  phone: string,
   email: string,
-  phone: number,
   avatar: string,
-  cb: () => void,
+  cb: (success?: boolean) => void,
 ) => {
   return async (dispatch: Dispatch<IDispatch>) => {
     try {
-
-      const {data} = await axiosAPI.post('me', {
-        name,
+      console.log(name,
         email,
         phone,
+        avatar,)
+      const {data} = await axiosAPI.post('me', {
+        name,
+        phone,
+        email,
         avatar,
       });
+      dispatch({
+        type: ActionType.SAVE_UPDATE_PROFILE_ERRORS,
+        payload: {},
+      });
+
+      const {token} = (await getItem(AsyncKeys.USER_DATA)) || '';
+
+      if (token !== '') {
+        dispatch({
+          type: ActionType.SAVE_LOGIN_DATA,
+          payload: {...data.data, token: token},
+        });
+      }
+
       console.log('updateProfile response data', data);
-      // dispatch({
-      //   type: ActionType.SAVE_USER_DATA_AFTER_VERIFY,
-      //   payload: data.data.user.data,
-      // });
       showMessage({
-        message: data.data.message,
+        message: data.message,
         type: 'success',
       });
-      cb && cb();
+      cb(true);
     } catch (error) {
+      cb(false);
       // showMessage({
       //   message: error?.response.data.data?.email
       //     ? error?.response.data.data?.email[0]
@@ -167,7 +181,6 @@ export const updateProfile = (
         payload: error?.response.data.data,
       });
       console.log('updateProfile Error', error?.response.data.data);
-      cb && cb();
     }
   };
 };

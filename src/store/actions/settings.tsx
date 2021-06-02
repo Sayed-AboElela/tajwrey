@@ -23,6 +23,11 @@ export const saveCities = (payload: []) => ({
   payload,
 });
 
+export const savePages = (payload: []) => ({
+  type: ActionType.SAVE_PAGES,
+  payload,
+});
+
 export const saveBanners = (payload: []) => ({
   type: ActionType.SAVE_BANNERS,
   payload,
@@ -80,6 +85,19 @@ export const contactsApi = () => {
     }
   };
 };
+
+export const pagesApi = () => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      const {data} = await axiosAPI.get(`pages`);
+      console.log('pagesApi response',data)
+      dispatch(savePages(data.data));
+    } catch (error) {
+      console.log('pagesApi Error', error?.response);
+    }
+  };
+};
+
 export const sendContactApi = (
   full_name: string,
   mobile_number: string,
@@ -116,6 +134,7 @@ export const sendContactApi = (
     }
   };
 };
+
 
 export const initializApp = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootState) => {

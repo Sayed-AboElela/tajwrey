@@ -1,5 +1,7 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
+import Share from 'react-native-share';
+import Rate, {AndroidMarket} from 'react-native-rate';
 import {Container} from "../components/containers/Containers";
 import Header from "../components/header/Header";
 import Footer from "../components/containers/Footer";
@@ -18,26 +20,50 @@ import {
   ShareIcon
 } from "../assets/icons/SvgIcons";
 import LangModal from "../components/LangModal";
+import {useDispatch} from "react-redux";
+import {pagesApi} from "../store/actions/settings";
 
 const More: FC = () => {
+
   const {t} = useTranslation();
   const {navigate} = useNavigation();
+  const dispatch = useDispatch();
+  const [rated, setRated] = useState(false);
   const [langModalShow, setLangModalShow] = useState(false);
-  // const handleShare = async () => {
-  //   const shareOptions = {
-  //     // title: resp.title,
-  //     failOnCancel: false,
-  //     url: `https://play.google.com/store/apps/details?id=com.tasawk.tajwrey`,
-  //   };
-  //
-  //   try {
-  //     const ShareResponse = await Share.open(shareOptions);
-  //     // setResult(JSON.stringify(ShareResponse, null, 2));
-  //   } catch (error) {
-  //     console.log('Error =>', error);
-  //     // setResult('error: '.concat(getErrorString(error)));
-  //   }
-  // };
+
+  const handleShare = async () => {
+    const shareOptions = {
+      title: t('Share the app'),
+      failOnCancel: false,
+      url: `https://play.google.com/store/apps/details?id=com.tasawk.tajwrey`,
+      message: ``,
+    };
+    try {
+      const ShareResponse = await Share.open(shareOptions);
+    } catch (error) {
+      console.log('handleShare Error =>', error);
+    }
+  };
+
+  const handleRateApp = async () => {
+    const options = {
+      AppleAppID: '2193813192',
+      GooglePackageName: 'com.tasawk.tajwrey',
+      AmazonPackageName: 'com.tasawk.tajwrey',
+      OtherAndroidURL: 'http://www.randomappstore.com/app/47172391',
+      preferredAndroidMarket: AndroidMarket.Google,
+      preferInApp: false,
+      openAppStoreIfInAppFails: true,
+      fallbackPlatformURL: 'https://tasawk.net/tajwrey/index.php/',
+    };
+    Rate.rate(options, (success: boolean) => {
+      if (success) {
+        setRated(true);
+      }
+    });
+  };
+
+
   const toggleLangModal = () => {
     setLangModalShow(!langModalShow);
   };
@@ -81,16 +107,12 @@ const More: FC = () => {
     {
       title: t('Share the app'),
       icon: <ShareIcon fill={ColorWithOpacity(Colors.dark, 0.6)}/>,
-      onPress: () => {
-        console.log('adasd')
-      },
+      onPress: handleShare,
     },
     {
       title: t('Rate us'),
       icon: <RateIcon fill={ColorWithOpacity(Colors.dark, 0.6)}/>,
-      onPress: () => {
-        console.log('adasd')
-      },
+      onPress: handleRateApp,
     },
     {
       title: t('Language'),
@@ -108,6 +130,10 @@ const More: FC = () => {
       },
     },
   ]
+
+  useEffect(() => {
+    dispatch(pagesApi());
+  }, []);
 
   return (
     <Container>

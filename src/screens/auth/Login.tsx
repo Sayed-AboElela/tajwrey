@@ -48,10 +48,10 @@ const Login = () => {
       LoginHandler(state.phone, state.password, success => {
         setstate(old => ({...old, loader: false}));
         success && navigate('Home');
-      }, () => navigate("PhoneCode")),
+      }),
     );
   };
-  console.log('loginErrors',loginErrors)
+  console.log('loginErrors', loginErrors)
   return (
     <Container>
       <Header/>
@@ -61,6 +61,7 @@ const Login = () => {
           <Text style={styles.headerTitle}>{t('Login')}</Text>
         </View>
         <View style={styles.inputsContainer}>
+
           <Input
             leftContent={PhoneIcon}
             options={{
@@ -74,6 +75,7 @@ const Login = () => {
             }}
             erorrMessage={InputErrorHandler(loginErrors, 'phone')}
           />
+
           <Input
             rightContent={PasswordIcon}
             leftContent={LockInputIcon}

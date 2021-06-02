@@ -43,6 +43,7 @@ export default {
   "New password": 'كلمة المرور الجديدة',
   "GET STARTED": 'ابدأ الآن',
   "New password confirmation": 'تأكيد كلمة المرور الجديدة',
+  "Password confirmation": 'تأكيد كلمة المرور',
   "Enter the activation code": 'ادخل كود التفعيل',
   'Remaining': 'الوقت المتبقي',
   'Purchase order': 'طلب شراء',

@@ -1,7 +1,7 @@
 import React, {createRef, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {AuthLogo, EyeIcon} from "../../assets/icons/SvgIcons";
-import {Container} from "../../components/containers/Containers";
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {AuthLogo, DropdownArrowIcon, EyeIcon} from "../../assets/icons/SvgIcons";
+import {Container, Content} from "../../components/containers/Containers";
 import Header from "../../components/header/Header";
 import {useTranslation} from "react-i18next";
 import {Colors, ColorWithOpacity, Fonts, Pixel} from "../../constants/styleConstants";
@@ -10,11 +10,12 @@ import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import {InputErrorHandler} from '../../constants/helpers';
-import {LoginHandler} from '../../store/actions/auth';
 import IconTouchableContainer from "../../components/touchables/IconTouchableContainer";
 import Button from "../../components/touchables/Button";
 import {commonStyles} from "../../styles/styles";
 import Touchable from "../../components/touchables/Touchable";
+import CitiesModal from "../../components/CitiesModal";
+import {RegisterHandler} from "../../store/actions/auth";
 
 const Register = () => {
   const {t} = useTranslation();
@@ -23,16 +24,27 @@ const Register = () => {
   const dispatch = useDispatch();
   const passwordConfirmRef = createRef();
   const [state, setstate] = useState({
+    modalShow: false,
     securePassword: true,
     securePasswordConfirm: true,
     loader: false,
-    username: '',
+    name: '',
     phone: '',
     email: '',
-    city: '',
+    selectedCity: {
+      city_id: "",
+      name: t('City')
+    },
     password: '',
-    passwordConfirm: '',
+    password_confirmation: '',
   });
+  const toggleLangModal = () => {
+    setstate(old => ({...old, modalShow: !old.modalShow}));
+  };
+
+  const handleSelectCity = (cityId: number, name: string) => {
+    setstate(old => ({...old, selectedCity: {city_id: cityId, name: name}}));
+  }
 
   const PasswordIcon = () => {
     return (
@@ -58,33 +70,46 @@ const Register = () => {
   const submitHandler = () => {
     setstate(old => ({...old, loader: true}));
     console.log(state, ' state');
-    navigate('Success')
-    // dispatch(
-    //   LoginHandler(state.phone, state.password, success => {
-    //     setstate(old => ({...old, loader: false}));
-    //     success && navigate('Home');
-    //   }, () => navigate("PhoneCode")),
-    // );
+    // navigate('Success')
+    dispatch(
+      RegisterHandler(
+        state.name,
+        state.email,
+        state.password,
+        state.password_confirmation,
+        state.phone,
+        state.selectedCity.city_id,
+        'token 93939',
+        'iphone',
+        success => {
+          setstate(old => ({...old, loader: false}));
+          success ? console.log('register success') : console.log('register failed ');
+          success && navigate('Success');
+        }),
+    );
   };
   console.log('registerErrors', registerErrors)
   return (
     <Container>
-      <Header title={'Register'}/>
-      <View style={styles.contentContainer}>
+      <Header title={t('Register')}/>
+      <Content style={styles.contentContainer} contentContainerStyle={{
+        paddingTop: Pixel(30),
+        paddingBottom: Pixel(100)
+      }}>
         <View style={styles.headerContainer}>
           <AuthLogo/>
         </View>
         <View style={styles.inputsContainer}>
           <Input
             options={{
-              value: state.username,
+              value: state.name,
               onChangeText: value => {
-                setstate(old => ({...old, username: value}));
+                setstate(old => ({...old, name: value}));
               },
-              placeholderTextColor:ColorWithOpacity(Colors.gray, 0.5),
+              placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('Username'),
             }}
-            erorrMessage={InputErrorHandler(registerErrors, 'username')}
+            erorrMessage={InputErrorHandler(registerErrors, 'name')}
           />
           <Input
             options={{
@@ -104,24 +129,31 @@ const Register = () => {
               onChangeText: value => {
                 setstate(old => ({...old, email: value}));
               },
-              placeholderTextColor:ColorWithOpacity(Colors.gray, 0.5),
+              placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('Email "optional"'),
               keyboardType: 'email-address',
             }}
-            erorrMessage={InputErrorHandler(registerErrors, 'phone')}
+            erorrMessage={InputErrorHandler(registerErrors, 'email')}
           />
-          <Input
-            options={{
-              value: state.email,
-              onChangeText: value => {
-                setstate(old => ({...old, email: value}));
-              },
-              placeholderTextColor:ColorWithOpacity(Colors.gray, 0.5),
-              placeholder: t('Email "optional"'),
-              keyboardType: 'email-address',
-            }}
-            erorrMessage={InputErrorHandler(registerErrors, 'phone')}
-          />
+          {/*<View style={[styles.inputContainer, {marginTop: 15}]}>*/}
+          <TouchableOpacity
+            style={[styles.dropDown, !!InputErrorHandler(registerErrors, 'city_id') && {borderColor: Colors.warning},]}
+            onPress={toggleLangModal}>
+            <Text style={styles.dropDownValue}>{state.selectedCity.name}</Text>
+            <DropdownArrowIcon style={commonStyles.rtlRotate}/>
+          </TouchableOpacity>
+          {!!InputErrorHandler(registerErrors, 'city_id') && (
+            <View style={{marginBottom: 7}}>
+              <Text
+                style={[
+                  styles.errorMessage,
+                  {color: !!InputErrorHandler(registerErrors, 'city_id') ? Colors.warning : 'transparent'},
+                ]}>
+                {InputErrorHandler(registerErrors, 'city_id')}
+              </Text>
+            </View>
+          )}
+          {/*</View>*/}
           <Input
             rightContent={PasswordIcon}
             options={{
@@ -140,16 +172,16 @@ const Register = () => {
             rightContent={PasswordConfirmIcon}
             options={{
               ref: () => passwordConfirmRef,
-              value: state.passwordConfirm,
+              value: state.password_confirmation,
               onChangeText: value => {
-                setstate(old => ({...old, passwordConfirm: value}));
+                setstate(old => ({...old, password_confirmation: value}));
               },
               secureTextEntry: state.securePasswordConfirm,
               onSubmitEditing: submitHandler,
               placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
-              placeholder: t('New password confirmation')
+              placeholder: t('Password confirmation')
             }}
-            erorrMessage={InputErrorHandler(registerErrors, 'passwordConfirm')}
+            erorrMessage={InputErrorHandler(registerErrors, 'password')}
           />
         </View>
         <Button
@@ -164,15 +196,17 @@ const Register = () => {
             <Text style={styles.termsBtnText}>{t('Terms and Conditions')}</Text>
           </Touchable>
         </View>
-      </View>
+      </Content>
+      <CitiesModal showProp={state.modalShow} toggleLangModal={toggleLangModal} handleSelectCity={handleSelectCity}
+                   selectedCity={state.selectedCity}/>
     </Container>
   );
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
-    ...commonStyles.contentPaddingHorizontal,
-    paddingTop: Pixel(30),
+    // ...commonStyles.contentPaddingHorizontal,
+    flex: 1,
   },
   headerContainer: {
     alignItems: 'center',
@@ -211,7 +245,30 @@ const styles = StyleSheet.create({
     color: Colors.mainColor,
     textAlign: 'center',
     fontFamily: Fonts.medium
-  }
+  },
+  dropDown: {
+    ...commonStyles.rowBox,
+    justifyContent: 'space-between',
+    backgroundColor: Colors.white,
+    borderRadius: Pixel(100),
+    padding: 5,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: Colors.CommonBorderColor,
+    paddingHorizontal: 20,
+    marginVertical: Pixel(14),
+    height: Pixel(110)
+  },
+  dropDownValue: {
+    fontFamily: Fonts.regular,
+    fontSize: Pixel(28),
+    color: ColorWithOpacity(Colors.gray, 0.5),
+  },
+  errorMessage: {
+    textAlign: 'center',
+    fontFamily: Fonts.medium,
+    fontSize: 14,
+  },
 });
 
 export default Register;

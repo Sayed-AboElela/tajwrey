@@ -16,11 +16,11 @@ const Buy: FC = () => {
   const [state, setstate] = useState({
     loader: false,
     phone: '',
-    commissionSourceId: 0,
+    commission_source: 0,
     type: 0,
   });
 
-  const commission_source = [
+  const commission_sources = [
     {
       id: 1,
       title: t('The first party requesting the request'),
@@ -47,14 +47,14 @@ const Buy: FC = () => {
     // );
   };
 
-  const commissionSourceOptions = useMemo(() => commission_source.map((item, index) => (
+  const commissionSourceOptions = useMemo(() => commission_sources.map((item, index) => (
     <CheckBox
       {...item}
       onPress={() => setstate((old) => ({...old, commissionSourceId: item.id}))}
-      selected={state.commissionSourceId === item.id}
+      selected={state.commission_source === item.id}
       key={index}
     />
-  )), [state.commissionSourceId]);
+  )), [state.commission_source]);
 
   return (
     <Container>
@@ -135,7 +135,7 @@ const Buy: FC = () => {
           title={t('Confirmation')}
           onPress={submitHandler}
           loader={state.loader}
-          style={{marginBottom:20}}
+          style={{marginVertical:20}}
         />
         <View style={[styles.inputContainer, {justifyContent: 'center', alignItems: 'center'}]}>
           <Text style={styles.termsText}>{t('Your confirmation of the order means your approval')}</Text>
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     // marginBottom: Pixel(17),
     alignSelf: 'flex-start',
     marginStart: Pixel(35),
+    textAlign:'left'
   },
   dropDown: {
     ...commonStyles.rowBox,

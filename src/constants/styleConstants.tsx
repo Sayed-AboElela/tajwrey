@@ -45,7 +45,9 @@ export const Fonts = {
   // light: !isRTL ? 'Roboto-Light' : 'IBMPlexSansArabic-Light',
 };
 
-export enum Images {}
+export enum Images {
+  userImage = require('../assets/images/def-avatar.png')
+}
 
 export enum ScreenOptions {
   StatusBarHeight = NativeModules.StatusBarManager.HEIGHT,

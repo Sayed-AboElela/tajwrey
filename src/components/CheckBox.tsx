@@ -6,14 +6,14 @@ import {CheckedIcon, UnCheckedIcon} from "../assets/icons/SvgIcons";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 
-interface IPaymentOption {
+interface ICheckBox {
   id: number;
   title: string;
   onPress: () => void;
   selected: boolean,
 }
 
-const CheckBox: FC<IPaymentOption> = ({
+const CheckBox: FC<ICheckBox> = ({
                                         id,
                                         title,
                                         onPress,

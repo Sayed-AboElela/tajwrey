@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleProp, StyleSheet, Text, TextInput, TextInputProps, View, ViewStyle,} from 'react-native';
+import {I18nManager, StyleProp, StyleSheet, Text, TextInput, TextInputProps, View, ViewStyle,} from 'react-native';
 import {Colors, ColorWithOpacity, Fonts, Pixel} from '../../constants/styleConstants';
+
+const {isRTL} = I18nManager;
 
 interface Props {
   options?: TextInputProps & { ref?: (ref: any) => void };
@@ -83,7 +85,9 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: Pixel(28),
     color: ColorWithOpacity(Colors.gray, 0.5),
-    height: Pixel(80)
+    height: Pixel(80),
+    textAlign: isRTL ? 'right' : 'left'
+    // alignSelf:'flex-start'
   },
   iconLeft: {
     position: 'absolute',
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     textAlign: 'center',
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.regular,
     fontSize: 14,
   },
 });

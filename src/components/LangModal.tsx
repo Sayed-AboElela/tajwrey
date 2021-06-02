@@ -13,6 +13,7 @@ import {
 import {useTranslation} from "react-i18next";
 import {LanguageHandler} from "../store/actions/settings";
 import {Colors, Fonts, Pixel} from "../constants/styleConstants";
+import {useDispatch} from "react-redux";
 
 const {isRTL} = I18nManager;
 
@@ -25,6 +26,7 @@ interface ILangModal {
 
 const LangModal: FC<ILangModal> = ({showProp, toggleLangModal,}) => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
 
   return (
     <Modal animationType="slide" transparent={true} visible={showProp}>
@@ -37,14 +39,14 @@ const LangModal: FC<ILangModal> = ({showProp, toggleLangModal,}) => {
               <TouchableOpacity style={[styles.langBtn, {backgroundColor: isRTL ? '#878787' : Colors.mainColor}]}
                                 onPress={() => {
                                   toggleLangModal()
-                                  LanguageHandler('en')
+                                  dispatch(LanguageHandler('en'));
                                 }}>
                 <Text style={styles.langBtnText}>{t('English')}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.langBtn, {backgroundColor: isRTL ? Colors.mainColor : '#878787'}]}
                                 onPress={() => {
                                   toggleLangModal()
-                                  LanguageHandler('ar')
+                                  dispatch(LanguageHandler('ar'))
                                 }}>
                 <Text style={styles.langBtnText}>{t('Arabic')}</Text>
               </TouchableOpacity>

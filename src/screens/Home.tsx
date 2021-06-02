@@ -7,7 +7,7 @@ import HomeSlider from '../components/Home/HomeSlider';
 import {useTranslation} from "react-i18next";
 import {BuyHomeIcon, SaleHomeIcon} from "../assets/icons/SvgIcons";
 import OrdersList from "../components/Home/OrdersList";
-import {Fonts, Pixel} from "../constants/styleConstants";
+import {Colors, ColorWithOpacity, Fonts, Pixel} from "../constants/styleConstants";
 
 const Home: FC = () => {
   const {t} = useTranslation();
@@ -27,11 +27,12 @@ const Home: FC = () => {
 
   return (
     <Container>
-      <View style={{paddingHorizontal:15}}>
+      <View style={{paddingHorizontal: 15}}>
         <HomeHeader/>
         <HomeSlider/>
         <OrdersList data={orderTypeData}/>
-      <Text style={styles.copyrights}>{t('All rights reserved © Tajwrey Corporation') + new Date().getFullYear()}</Text>
+        <Text
+          style={styles.copyrights}>{t('All rights reserved © Tajwrey Corporation') + new Date().getFullYear()}</Text>
       </View>
       <Footer/>
     </Container>
@@ -41,10 +42,11 @@ const Home: FC = () => {
 export default Home;
 
 const styles = StyleSheet.create({
-  copyrights:{
-    fontFamily:Fonts.medium,
-    fontSize:Pixel(28),
-    textAlign:'center',
-    marginTop:Pixel(180),
+  copyrights: {
+    fontFamily: Fonts.medium,
+    fontSize: Pixel(28),
+    textAlign: 'center',
+    marginTop: Pixel(250),
+    color: ColorWithOpacity(Colors.dark, 0.6)
   }
 });

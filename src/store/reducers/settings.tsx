@@ -4,44 +4,29 @@ import {ActionType} from '../actions/actions';
 const initialState = {
   appLoaded: false,
   preloaderVisible: false,
-  dashboard: {},
-  sellerstore: {},
-  products: [],
-  sellerproduct: {},
-  countries: [],
-  zones: [],
+  onboarding: null,
+  cities: [],
+  banners: [],
+  contacts: [],
+  contactsUsErrors: {},
 };
 export default (state = initialState, action: IReduser) => {
   switch (action.type) {
     case ActionType.APP_LOADED:
       return {...state, appLoaded: true};
-    case ActionType.SAVE_COUNTRIES:
-      return {...state, countries: action.payload};
-    case ActionType.SAVE_ZONES:
-      return {...state, zones: true};
+    case ActionType.SAVE_CITIES:
+      return {...state, cities: action.payload};
+    case ActionType.SAVE_BANNERS:
+      return {...state, banners: action.payload};
+    case ActionType.SAVE_ON_BOARDING:
+      return {...state, onboarding: action.payload};
+    case ActionType.SAVE_CONTACTS:
+      return {...state, contacts: action.payload};
+    case ActionType.SAVE_CONTACTUS_ERRORS:
+      return {...state, contactsUsErrors: action.payload};
     case ActionType.TOGGLE_LOADER:
       return {...state, preloaderVisible: action.payload};
-    case ActionType.LOAD_SCREEN:
-      return {...state, [action.payload.screen]: action.payload.data};
-    case ActionType.LOAD_PRODUCTS:
-      if (action.payload?.pagination?.page === '1') {
-        return {
-          ...state,
-          products: action.payload.products,
-          sellerproduct: action.payload,
-        };
-      }
-      return {
-        ...state,
-        products: [...state.products, ...action.payload.products],
-      };
-    case ActionType.DELETE_PRODUCT:
-      return {
-        ...state,
-        products: state.products.filter(
-          (item) => item.product_id !== action.payload,
-        ),
-      };
+
   }
   return state;
 };

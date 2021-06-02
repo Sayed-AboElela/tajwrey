@@ -1,6 +1,6 @@
 import React, {createRef, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {AuthLogo, EyeIcon} from "../../assets/icons/SvgIcons";
+import {StyleSheet, View} from 'react-native';
+import {EyeIcon} from "../../assets/icons/SvgIcons";
 import {Container} from "../../components/containers/Containers";
 import Header from "../../components/header/Header";
 import {useTranslation} from "react-i18next";
@@ -10,27 +10,28 @@ import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import {InputErrorHandler} from '../../constants/helpers';
-import {LoginHandler} from '../../store/actions/auth';
+import {ChangePasswordHandler} from '../../store/actions/auth';
 import IconTouchableContainer from "../../components/touchables/IconTouchableContainer";
 import Button from "../../components/touchables/Button";
 import {commonStyles} from "../../styles/styles";
-import Touchable from "../../components/touchables/Touchable";
 
 const ChangePassword = () => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
-  const {registerErrors} = useSelector((state: RootState) => state.auth);
+  const {changePasswordErrors} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const passwordConfirmRef = createRef();
+
   const [state, setstate] = useState({
     secureOldPassword: true,
     securePassword: true,
     securePasswordConfirm: true,
     loader: false,
-    oldPassword: '',
+    old_password: '',
     password: '',
-    passwordConfirm: '',
+    password_confirmation: '',
   });
+
   const OldPasswordIcon = () => {
     return (
       <IconTouchableContainer
@@ -64,35 +65,33 @@ const ChangePassword = () => {
 
   const submitHandler = () => {
     setstate(old => ({...old, loader: true}));
-    console.log(state, ' state');
-    // navigate('Success')
-    // dispatch(
-    //   LoginHandler(state.phone, state.password, success => {
-    //     setstate(old => ({...old, loader: false}));
-    //     success && navigate('Home');
-    //   }, () => navigate("PhoneCode")),
-    // );
+    dispatch(
+      ChangePasswordHandler(state.old_password, state.password, state.password_confirmation, success => {
+        setstate(old => ({...old, loader: false}));
+        success && navigate('Profile');
+      }),
+    );
   };
-  console.log('registerErrors', registerErrors)
+  // console.log('changePasswordErrors', changePasswordErrors)
   return (
     <Container>
-      <Header title={'Register'}/>
+      <Header title={t("Password change")}/>
       <View style={styles.contentContainer}>
         <View style={styles.inputsContainer}>
 
           <Input
             rightContent={OldPasswordIcon}
             options={{
-              value: state.oldPassword,
+              value: state.old_password,
               onChangeText: value => {
-                setstate(old => ({...old, oldPassword: value}));
+                setstate(old => ({...old, old_password: value}));
               },
               secureTextEntry: state.secureOldPassword,
               onSubmitEditing: submitHandler,
               placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('Old password')
             }}
-            erorrMessage={InputErrorHandler(registerErrors, 'password')}
+            erorrMessage={InputErrorHandler(changePasswordErrors, 'old_password')}
           />
           <Input
             rightContent={PasswordIcon}
@@ -106,22 +105,22 @@ const ChangePassword = () => {
               placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('Password')
             }}
-            erorrMessage={InputErrorHandler(registerErrors, 'password')}
+            erorrMessage={InputErrorHandler(changePasswordErrors, 'password')}
           />
           <Input
             rightContent={PasswordConfirmIcon}
             options={{
               ref: () => passwordConfirmRef,
-              value: state.passwordConfirm,
+              value: state.password_confirmation,
               onChangeText: value => {
-                setstate(old => ({...old, passwordConfirm: value}));
+                setstate(old => ({...old, password_confirmation: value}));
               },
               secureTextEntry: state.securePasswordConfirm,
               onSubmitEditing: submitHandler,
               placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('New password confirmation')
             }}
-            erorrMessage={InputErrorHandler(registerErrors, 'passwordConfirm')}
+            erorrMessage={InputErrorHandler(changePasswordErrors, 'password')}
           />
         </View>
         <Button

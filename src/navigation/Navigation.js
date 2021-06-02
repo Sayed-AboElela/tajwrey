@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, HeaderStyleInterpolators, TransitionSpecs,} from '@react-navigation/stack';
 import {shallowEqual, useSelector} from 'react-redux';
@@ -26,6 +26,8 @@ import ContactUs from "../screens/ContactUs";
 import Privacy from "../screens/content/Privacy";
 import Faq from "../screens/content/Faq";
 import Onboarding from "../screens/Onboarding";
+import {getItem} from "../constants/helpers";
+// import {onboarding} from "../store/selectors/SettingsSelectors";
 
 const Stack = createStackNavigator();
 const navigationTransition = {
@@ -87,10 +89,11 @@ const TabsAnimation = {
     };
   },
 };
-
+// console.log('onboarding',onboarding())
 
 const Stacks = () => {
-  const {isLogin, onboarding} = useSelector((state) => state.auth, shallowEqual);
+  const {isLogin} = useSelector((state) => state.auth, shallowEqual);
+  const {onboarding} = useSelector((state) => state.settings, shallowEqual);
 
   return (
     <Stack.Navigator
@@ -99,12 +102,13 @@ const Stacks = () => {
         return {headerShown: false, ...navigationTransition};
       }}
       initialRouteName={
-        isLogin ? 'Home' : !onboarding ? 'Onboarding' : 'Login'
+        onboarding === null ? 'Onboarding' : isLogin ? 'Home' : 'Login'
+        // isLogin ? 'Home' : !walkthroughVisible ? 'Onboarding' : 'Login'
       }
     >
-      <Stack.Screen name="Home" component={Home} options={{...TabsAnimation}}/>
       <Stack.Screen name="Onboarding" component={Onboarding}/>
       <Stack.Screen name="Login" component={Login}/>
+      <Stack.Screen name="Home" component={Home} options={{...TabsAnimation}}/>
       <Stack.Screen name="Register" component={Register}/>
       <Stack.Screen name="Forget" component={Forget}/>
       <Stack.Screen name="PhoneCode" component={PhoneCode}/>

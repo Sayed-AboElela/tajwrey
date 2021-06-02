@@ -39,11 +39,12 @@ const Notifications: FC = () => {
   return (
     <Container>
       <NotificationHeader title={t('Notifications')}/>
-
       <FlatList
-      contentContainerStyle={{paddingHorizontal:25}}
+        contentContainerStyle={{paddingHorizontal: 25}}
         data={data}
-                renderItem={({item}) => <NotificationItem {...item}/>}/>
+        renderItem={({item}) => <NotificationItem {...item}/>}
+        keyExtractor={item => item.id.toString()}
+      />
       <Footer/>
     </Container>
   );

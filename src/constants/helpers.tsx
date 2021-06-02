@@ -88,8 +88,8 @@ export const clear = async () => {
 export const paginationConfig = [
   Platform.OS === 'ios'
     ? {
-        onEndReachedThreshold: 0,
-      }
+      onEndReachedThreshold: 0,
+    }
     : {onEndThreshold: 0},
 ];
 /**
@@ -146,7 +146,7 @@ export const OpenUrlHandler = async (url: string): Promise<void> => {
     await Linking.openURL(url);
   } else {
     showMessage({
-      message: 'This link cannot be opened',
+      message: TranslateTextHandler('This link cannot be opened', 'عفوا لا يمكن فتح هذا الرابط'),
       type: 'danger',
     });
   }

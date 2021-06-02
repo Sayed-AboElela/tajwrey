@@ -2,15 +2,16 @@ import {IReduser} from '../../constants/interfaces';
 import {ActionType} from '../actions/actions';
 
 const initialState = {
-  userData: {},
   isLogin: false,
+  userData: {},
+  notifications: [],
   registerErrors: {},
   loginErrors: {},
   forgetPasswordErrors: {},
-  phoneNumber: '',
-  locationSupport: false,
-  onboarding: false,
+  updateProfileErrors: {},
+  changePasswordErrors: {},
 };
+
 
 export default (state = initialState, {type, payload}: IReduser) => {
   switch (type) {
@@ -35,6 +36,11 @@ export default (state = initialState, {type, payload}: IReduser) => {
         userData: payload,
         isLogin: true,
       };
+    case ActionType.SAVE_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: payload,
+      };
     case ActionType.SAVE_USER_DATA_AFTER_VERIFY:
       return {
         ...state,
@@ -48,11 +54,15 @@ export default (state = initialState, {type, payload}: IReduser) => {
         isLogin: false,
       };
     case ActionType.SAVE_REGISTER_ERORRS:
-      return {...state, registerErorrs: payload};
+      return {...state, registerErrors: payload};
+    case ActionType.SAVE_UPDATE_PROFILE_ERRORS:
+      return {...state, updateProfileErrors: payload};
     case ActionType.SAVE_LOGIN_ERORRS:
-      return {...state, loginErorrs: payload};
+      return {...state, loginErrors: payload};
+    case ActionType.SAVE_CHANGE_PASSWORD_ERRORS:
+      return {...state, changePasswordErrors: payload};
     case ActionType.SAVE_FORGET_PASSWORD_ERORRS:
-      return {...state, forgetPasswordErorrs: payload};
+      return {...state, forgetPasswordErrors: payload};
     case ActionType.SAVE_PHONE:
       return {...state, phoneNumber: payload};
   }

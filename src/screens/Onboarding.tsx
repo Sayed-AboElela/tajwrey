@@ -1,5 +1,5 @@
 import React, {FC, useRef, useState} from 'react';
-import {Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {Dimensions, I18nManager, StatusBar, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
 import {Colors, Fonts, Pixel, ScreenOptions,} from '../constants/styleConstants';
 import {ScreenProps} from '../constants/interfaces';
 import {Onboarding1, Onboarding2,} from '../assets/icons/SvgIcons';
@@ -7,7 +7,12 @@ import Button from '../components/touchables/Button';
 import Animated from 'react-native-reanimated';
 import {SvgProps} from 'react-native-svg';
 import {useTranslation} from "react-i18next";
+import {useNavigation} from "@react-navigation/native";
+import {saveItem} from "../constants/helpers";
+import {useDispatch} from "react-redux";
+import {ActionType} from "../store/actions/actions";
 
+const {isRTL} = I18nManager;
 const {width} = Dimensions.get('window');
 
 interface ISlide {
@@ -19,6 +24,8 @@ interface ISlide {
 
 const Onboarding: FC<ScreenProps> = ({navigation}) => {
   const {t} = useTranslation();
+  const {navigate} = useNavigation();
+  const dispatch = useDispatch();
 
   const data = useState([
     {
@@ -39,6 +46,11 @@ const Onboarding: FC<ScreenProps> = ({navigation}) => {
   ])[0];
 
   const scroll = useRef<Animated.ScrollView>(null);
+  const submitHandler = async () => {
+    // await saveItem('onBoarding', true);
+    dispatch({type: ActionType.SAVE_ON_BOARDING, payload: true});
+    navigate('Login')
+  }
   const Slide: FC<ISlide> = ({description, Icon, title, index}) => {
     return (
       <View style={styles.slide}>
@@ -47,7 +59,7 @@ const Onboarding: FC<ScreenProps> = ({navigation}) => {
             style={styles.skipButton}
             onPress={() => {
               scroll.current?.scrollTo({
-                x: width * (index + data.length - 1),
+                x: !isRTL ? width * (index - data.length - 1) : width * (index + data.length - 1),
                 animated: true,
               });
             }}>
@@ -98,9 +110,7 @@ const Onboarding: FC<ScreenProps> = ({navigation}) => {
           }}>
             <Button
               title={t("GET STARTED")}
-              onPress={() => {
-                navigation?.navigate('Login');
-              }}
+              onPress={submitHandler}
               style={{
                 width: width - 60,
               }}

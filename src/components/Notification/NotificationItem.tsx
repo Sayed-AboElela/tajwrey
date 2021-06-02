@@ -1,7 +1,9 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {I18nManager, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {Colors, ColorWithOpacity, Fonts, Pixel} from '../../constants/styleConstants';
 import {commonStyles} from "../../styles/styles";
+
+const {isRTL} = I18nManager;
 
 interface INotificationItem {
   id: number;
@@ -34,13 +36,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: Pixel(30),
     ...commonStyles.boxShadow,
     marginTop: 15,
-    borderRadius: 15
+    borderRadius: 15,
+    alignItems: 'flex-start'
   },
   title: {
     fontFamily: Fonts.medium,
     fontSize: Pixel(26),
     marginBottom: 7,
     color: Colors.mainColor,
+    textAlign:  'left',
   },
   date: {
     fontFamily: Fonts.regular,

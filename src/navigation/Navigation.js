@@ -106,8 +106,8 @@ const Stacks = () => {
         // isLogin ? 'Home' : !walkthroughVisible ? 'Onboarding' : 'Login'
       }
     >
-      <Stack.Screen name="Onboarding" component={Onboarding}/>
-      <Stack.Screen name="Login" component={Login}/>
+      {!isLogin && onboarding === null &&<Stack.Screen name="Onboarding" component={Onboarding}/>}
+      {!isLogin &&<Stack.Screen name="Login" component={Login}/>}
       <Stack.Screen name="Home" component={Home} options={{...TabsAnimation}}/>
       <Stack.Screen name="Register" component={Register}/>
       <Stack.Screen name="Forget" component={Forget}/>

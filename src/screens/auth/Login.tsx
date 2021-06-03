@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {AuthLogo, EyeIcon, LockIcon, TelephoneIcon} from "../../assets/icons/SvgIcons";
 import {Container} from "../../components/containers/Containers";
@@ -20,6 +20,7 @@ const Login = () => {
   const {navigate} = useNavigation();
   const {loginErrors} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
+
   const [state, setstate] = useState({
     secureTextEntry: true,
     loader: false,
@@ -48,10 +49,10 @@ const Login = () => {
       LoginHandler(state.phone, state.password, success => {
         setstate(old => ({...old, loader: false}));
         success && navigate('Home');
-      }),
+      }, (screen, params) => navigate(screen, params)),
     );
   };
-  console.log('loginErrors', loginErrors)
+
   return (
     <Container>
       <Header/>

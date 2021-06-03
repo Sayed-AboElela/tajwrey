@@ -5,6 +5,10 @@ import {ActionType} from './actions';
 import {AsyncKeys, clear, getItem, saveItem} from '../../constants/helpers';
 import {showMessage} from 'react-native-flash-message';
 import RNRestart from 'react-native-restart';
+import {getDeviceType, getUniqueId} from 'react-native-device-info';
+import {I18nManager} from "react-native";
+
+const {isRTL} = I18nManager;
 
 export const RegisterHandler = (
   name: string,
@@ -13,12 +17,14 @@ export const RegisterHandler = (
   password_confirmation: string,
   phone: string,
   city_id: number | string,
-  device_token: string,
-  device_type: string,
   cb: (success?: boolean) => void,
 ) => {
   return async (dispatch: Dispatch<IDispatch>) => {
+
     try {
+      let type = getDeviceType();
+      let uniqueId = getUniqueId();
+
       const {data} = await axiosAPI.post('register', {
         name,
         email,
@@ -26,9 +32,8 @@ export const RegisterHandler = (
         password,
         password_confirmation,
         city_id,
-        role: 1,
-        device_token,
-        device_type,
+        "device_token": `token ${uniqueId}`,
+        "device_type": type
       });
       console.log('RegisterHandler data', data.data.user);
 
@@ -61,39 +66,51 @@ export const LoginHandler = (
   phone: string,
   password: string,
   cb: (success?: boolean) => void,
-  // navigate: (screen: string) => void,
+  navigate: (screen: string, params?: {}) => void,
 ) => {
   return async (dispatch: Dispatch<IDispatch>) => {
     try {
+      let type = getDeviceType();
+      let uniqueId = getUniqueId();
       const {data} = await axiosAPI.post('login', {
         phone,
         password,
-        "device_token": "token 93939",
-        "device_type": "iphone"
+        "device_token": `token ${uniqueId}`,
+        "device_type": type
       });
 
-      console.log('LoginHandler data', {...data.data.user, token: data.data.token});
+      console.log('LoginHandler data', data);
 
       dispatch({
         type: ActionType.SAVE_LOGIN_ERORRS,
         payload: {},
       });
-      //
-      showMessage({
-        message: data.message,
-        type: 'success',
-      });
-      //
-      dispatch({
-        type: ActionType.SAVE_LOGIN_DATA,
-        payload: {...data.data.user, token: data.data.token},
-      });
-      await saveItem(AsyncKeys.USER_DATA, {...data.data.user, token: data.data.token});
-      //
-      cb(true);
+
+      if (data.data.user.active) {
+        dispatch({
+          type: ActionType.SAVE_LOGIN_DATA,
+          payload: {...data.data.user, token: data.data.token},
+        });
+        await saveItem(AsyncKeys.USER_DATA, {...data.data.user, token: data.data.token});
+
+        showMessage({
+          message: data.message,
+          type: 'success',
+        });
+        cb(true);
+      } else {
+        let verifyMsg = isRTL ? "برجاء تفعيل رقم الجوال" : "Please activate the mobile number";
+        showMessage({
+          message: verifyMsg,
+          type: 'danger',
+        });
+        navigate('PhoneCode', {phone: data.data.user.phone, navigateTo: 'Home'});
+        cb(false);
+      }
+
     } catch (error) {
       cb(false);
-      console.log('error?.response.data.message', error?.response.data.message);
+      console.log('error?.response.data.message', error?.response);
 
       dispatch({
         type: ActionType.SAVE_LOGIN_ERORRS,
@@ -107,27 +124,93 @@ export const LoginHandler = (
           })
           : null;
       }
-      // if (error?.response.data.message === 'Please Verify phone') {
-      //   console.log('error?.response.data', error?.response.data.phone);
-      // await saveItem(AsyncKeys.USER_DATA, {
-      //   phone: error?.response.data.phone,
-      //   token: error?.response.data.token,
-      // });
-      // dispatch({
-      //   type: ActionType.SAVE_USER_DATA_STEP_2,
-      //   payload: {
-      //     phone: error?.response.data.phone,
-      //     token: error?.response.data.token,
-      //   },
-      // });
-      // navigate('PhoneCode');
-      // }
 
       console.log('Loginerorr', error?.response);
     }
   };
 };
 
+
+export const VerifyPhoneCodeHandler = (
+  phone: string,
+  code: string,
+  cb: (success?: boolean) => void,
+  // navigate: (screen: string, params?: {}) => void,
+) => {
+  return async (dispatch: Dispatch<IDispatch>) => {
+    try {
+
+      const {data} = await axiosAPI.post('validate-confirmation-code', {
+        phone,
+        code,
+      });
+      console.log('VerifyPhoneCodeHandler', data);
+      // dispatch({
+      //   type: ActionType.SAVE_LOGIN_DATA,
+      //   payload: {...data.data.user, token: data.data.token},
+      // });
+      // await saveItem(AsyncKeys.USER_DATA, {...data.data.user, token: data.data.token});
+
+      showMessage({
+        message: data.message,
+        type: 'success',
+      });
+
+      cb(true);
+
+    } catch (error) {
+      cb(false);
+      showMessage({
+        message: error?.response.data.message,
+        type: 'danger',
+      });
+      console.log('VerifyPhoneCodeHandler Error', error?.response);
+    }
+  };
+};
+
+
+export const ForgetHandler = (
+  phone: string,
+  cb: (success?: boolean) => void,
+) => {
+  return async (dispatch: Dispatch<IDispatch>) => {
+    try {
+      const {data} = await axiosAPI.post('send-confirmation-code', {
+        phone,
+      });
+      console.log('ForgetHandler data',data)
+
+      dispatch({
+        type: ActionType.SAVE_FORGET_PASSWORD_ERRORS,
+        payload: {},
+      });
+
+      showMessage({
+        message: data.message,
+        type: 'success',
+      });
+      cb(true);
+      // navigate('PhoneCode', {phone: data.data.user.phone, navigateTo: 'Home'});
+
+    } catch (error) {
+      cb(false);
+
+      console.log('error?.response.data.data', error?.response.data.data)
+      let noUserFound = Array.isArray(error?.response.data.data) ? {
+        "phone": [error?.response.data.message]
+      } : error?.response.data.data
+
+      dispatch({
+        type: ActionType.SAVE_FORGET_PASSWORD_ERRORS,
+        payload: noUserFound,
+      });
+
+      console.log('ForgetHandler Error', error?.response);
+
+    }
+  };
+};
 
 export const updateProfile = (
   name: string,
@@ -185,6 +268,47 @@ export const updateProfile = (
   };
 };
 
+
+export const NewPasswordHandler = (
+  phone: string,
+  password: string,
+  password_confirmation: string,
+  cb: (success?: boolean) => void,
+) => {
+  return async (dispatch: Dispatch<IDispatch>) => {
+    try {
+      const {data} = await axiosAPI.post('reset-password', {
+        phone,
+        password,
+        password_confirmation,
+      });
+      console.log(data);
+      dispatch({
+        type: ActionType.SAVE_CHANGE_PASSWORD_ERRORS,
+        payload: {},
+      });
+      showMessage({
+        message: data.message,
+        type: 'success',
+      });
+
+      cb(true);
+    } catch (error) {
+      cb(false);
+      // showMessage({
+      //   message: error?.response.data.message,
+      //   type: 'danger',
+      // });
+      dispatch({
+        type: ActionType.SAVE_CHANGE_PASSWORD_ERRORS,
+        payload: error?.response.data.data,
+      });
+
+      console.log(error?.response);
+    }
+  };
+};
+
 export const ChangePasswordHandler = (
   old_password: string,
   password: string,
@@ -221,6 +345,8 @@ export const ChangePasswordHandler = (
     }
   };
 };
+
+
 export const LogoutHandler = (cb?: () => void) => {
   return async (dispatch: Dispatch<IDispatch>) => {
     console.log('LogoutHandler')

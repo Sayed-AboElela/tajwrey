@@ -45,6 +45,7 @@ export default {
   "New password confirmation": 'تأكيد كلمة المرور الجديدة',
   "Password confirmation": 'تأكيد كلمة المرور',
   "Enter the activation code": 'ادخل كود التفعيل',
+  "Activation code": 'كود التفعيل',
   'Remaining': 'الوقت المتبقي',
   'Purchase order': 'طلب شراء',
   'Purchase': 'طلب شراء',

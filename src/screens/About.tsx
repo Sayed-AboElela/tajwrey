@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, I18nManager, StyleSheet, Text, View} from 'react-native';
 import {Container, Content} from "../components/containers/Containers";
 import {AboutSvg} from "../assets/icons/SvgIcons";
 import Header from "../components/header/Header";
@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {Colors, Fonts, Pixel} from "../constants/styleConstants";
 
+const {isRTL} = I18nManager;
 const {width, height} = Dimensions.get('window');
 const About: FC = () => {
   const {t} = useTranslation();
@@ -49,7 +50,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: Pixel(29),
     lineHeight: Pixel(55),
-    color: Colors.mainColor
+    color: Colors.mainColor,
+    alignSelf: 'flex-start',
+
+    textAlign: 'left'
   }
 });
 

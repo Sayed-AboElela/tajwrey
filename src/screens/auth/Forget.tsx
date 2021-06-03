@@ -7,15 +7,17 @@ import {Colors, ColorWithOpacity, Fonts, Pixel} from "../../constants/styleConst
 import Input from "../../components/textInputs/Input";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../store/store';
-import {InputErorrHandler} from '../../constants/helpers';
-import {LoginHandler} from '../../store/actions/auth';
+import {ForgetHandler} from '../../store/actions/auth';
 import Button from "../../components/touchables/Button";
 import {commonStyles} from "../../styles/styles";
+import {InputErrorHandler} from "../../constants/helpers";
+import {RootState} from "../../store/store";
 
 const Forget = () => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
+  const forgetPasswordErrors = useSelector((state: RootState) => state.auth.forgetPasswordErrors);
+
   const dispatch = useDispatch();
   const [state, setstate] = useState({
     loader: false,
@@ -25,14 +27,12 @@ const Forget = () => {
 
   const submitHandler = () => {
     setstate(old => ({...old, loader: true}));
-    navigate('PhoneCode')
-    console.log(state, ' state');
-    // dispatch(
-    //   LoginHandler(state.phone, state.password, success => {
-    //     setstate(old => ({...old, loader: false}));
-    //     success && navigate('Home');
-    //   }, () => navigate("PhoneCode")),
-    // );
+    dispatch(
+      ForgetHandler(state.phone, success => {
+        setstate(old => ({...old, loader: false}));
+        success && navigate('PhoneCode', {phone: state.phone, navigateTo: 'NewPassword'});
+      }),
+    );
   };
   return (
     <Container>
@@ -54,6 +54,7 @@ const Forget = () => {
               keyboardType: 'phone-pad',
               onSubmitEditing: submitHandler,
             }}
+            erorrMessage={InputErrorHandler(forgetPasswordErrors, 'phone')}
           />
         </View>
 
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     color: Colors.mainColor,
     fontSize: Pixel(35),
     marginTop: Pixel(25),
-    textAlign:'center',
+    textAlign: 'center',
   },
   inputsContainer: {
     marginTop: Pixel(50),

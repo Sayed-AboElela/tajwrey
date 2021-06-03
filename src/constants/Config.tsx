@@ -7,8 +7,8 @@ export const baseUrl = 'https://tasawk.net/tajwrey/index.php/api/';
 export const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
-  'Accept-Language': isRTL ? 'ar' : 'en',
-  Lang: isRTL ? 'ar' : 'en',
+  // 'Accept-Language': isRTL ? 'ar' : 'en',
+  localization: isRTL ? 'ar' : 'en',
 };
 
 export const axiosAPI = axios.create({

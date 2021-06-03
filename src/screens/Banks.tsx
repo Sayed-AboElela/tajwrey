@@ -34,7 +34,7 @@ const About: FC = () => {
                 renderItem={({item}) => (
                   <BankAccount {...item}/>
                 )}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
       />
     </Container>
   );

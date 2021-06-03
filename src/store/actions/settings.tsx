@@ -7,6 +7,7 @@ import {IDispatch} from "../../constants/interfaces";
 import {RootState} from "../store";
 import {showMessage} from "react-native-flash-message";
 
+
 const {isRTL, forceRTL, allowRTL, swapLeftAndRightInRTL} = I18nManager;
 
 export const loadApp = () => ({
@@ -90,7 +91,7 @@ export const pagesApi = () => {
   return async (dispatch: Dispatch<any>) => {
     try {
       const {data} = await axiosAPI.get(`pages`);
-      console.log('pagesApi response',data)
+      console.log('pagesApi response', data)
       dispatch(savePages(data.data));
     } catch (error) {
       console.log('pagesApi Error', error?.response);
@@ -107,7 +108,7 @@ export const sendContactApi = (
 ) => {
   return async (dispatch: Dispatch<any>) => {
     try {
-      const {data} = await axiosAPI.post(`contacts`,{
+      const {data} = await axiosAPI.post(`contacts`, {
         full_name,
         mobile_number,
         email,

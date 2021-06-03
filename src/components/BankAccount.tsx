@@ -6,6 +6,7 @@ import {commonStyles} from "../styles/styles";
 // import Icon from "react-native-vector-icons/FontAwesome5";
 /*************************************************************/
 interface IBankAccount {
+  id:nubmer;
   title: string;
   image: string;
   account_owner: string;
@@ -13,7 +14,7 @@ interface IBankAccount {
   iban: string;
 }
 
-const BankAccount: FC<IBankAccount> = ({title, image, account_owner, account_number, iban}) => {
+const BankAccount: FC<IBankAccount> = ({id,title, image, account_owner, account_number, iban}) => {
   const {t} = useTranslation();
   const screenWidth = Dimensions.get('window');
   return (

@@ -3,60 +3,65 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Container} from '../../components/containers/Containers';
 import {Colors, Fonts, Pixel} from '../../constants/styleConstants';
 import {useTranslation} from 'react-i18next';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Button from '../../components/touchables/Button';
 import CodeInput from '../../components/textInputs/CodeInput';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import Header from "../../components/header/Header";
 import {commonStyles} from "../../styles/styles";
+import {VerifyPhoneCodeHandler} from "../../store/actions/auth";
 // import {ResendPhoneCodeHandler, VerifyPhoneCodeHandler} from '../../store/actions/auth';
 
 const PhoneCode: FC = () => {
-  const [state, setstate] = useState({
-    loader: false,
-    code: '',
-    minutes: 1,
-    seconds: 0
-  });
-
   const dispatch = useDispatch();
   const {userData}: any = useSelector(
     (state: RootState) => state.auth,
     shallowEqual,
   );
+
   const {t} = useTranslation();
   const {navigate} = useNavigation();
+  const route = useRoute();
+
+  const [state, setstate] = useState({
+    loader: false,
+    code: '',
+    // minutes: 1,
+    // seconds: 0
+  });
+
   const submitHandler = () => {
     setstate(old => ({...old, loader: true}));
-    navigate('NewPassword')
-    // dispatch(
-    //   VerifyPhoneCodeHandler(state.code, success => {
-    //     setstate(old => ({...old, loader: false}));
-    //     success && navigate('RegisterLocation');
-    //   }),
-    // );
+    // navigate('NewPassword')
+    dispatch(
+      VerifyPhoneCodeHandler(route.params?.phone, state.code, success => {
+        setstate(old => ({...old, loader: false}));
+        success && navigate(route.params?.navigateTo, {phone: route.params?.phone});
+      }),
+    );
   };
 
   useEffect(() => {
-    const titTok = setInterval(() => {
-      if (state.seconds > 0) {
-        setstate(old => ({...old, seconds: state.seconds - 1}));
-      }
-      if (state.seconds === 0) {
-        if (state.minutes === 0) {
-          clearInterval(titTok)
-        } else {
-          setstate(old => ({
-            ...old,
-            minutes: state.minutes - 1,
-            seconds: 59
-          }));
-        }
-      }
-    }, 1000);
+    console.log('route.params', route.params?.phone)
+    // const titTok = setInterval(() => {
+    //   if (state.seconds > 0) {
+    //     setstate(old => ({...old, seconds: state.seconds - 1}));
+    //   }
+    //   if (state.seconds === 0) {
+    //     if (state.minutes === 0) {
+    //       clearInterval(titTok)
+    //     } else {
+    //       setstate(old => ({
+    //         ...old,
+    //         minutes: state.minutes - 1,
+    //         seconds: 59
+    //       }));
+    //     }
+    //   }
+    // }, 1000);
     return () => {
-      clearInterval(titTok)
+      // clearInterval(titTok)
     };
   });
   const resedCode = () => {
@@ -88,7 +93,7 @@ const PhoneCode: FC = () => {
   }
   return (
     <Container>
-      <Header title={t('Forgot Password?')}/>
+      <Header title={t('Activation code')}/>
       <View style={styles.contentContainer}>
         <View style={styles.headerContainer}>
           <Text
@@ -106,10 +111,10 @@ const PhoneCode: FC = () => {
           {/*</View>*/}
 
         </View>
-        <View style={styles.codeTimerContainer}>
-          <Text
-            style={styles.codeTimerText}>{state.minutes}:{state.seconds < 10 ? `0${state.seconds}` : state.seconds} {t("Remaining")}</Text>
-        </View>
+        {/*<View style={styles.codeTimerContainer}>*/}
+        {/*  <Text*/}
+        {/*    style={styles.codeTimerText}>{state.minutes}:{state.seconds < 10 ? `0${state.seconds}` : state.seconds} {t("Remaining")}</Text>*/}
+        {/*</View>*/}
         <View style={[styles.codeTimerContainer, {flexDirection: "row", alignItems: 'center', marginTop: 15}]}>
           <Text
             style={styles.resendText}>{t("Don't Receive The OPT ?")}</Text>
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
   },
   inputsContainer: {
     marginTop: Pixel(50),
-    marginBottom:Pixel(10),
+    marginBottom: Pixel(10),
   },
   submitContainer: {
     marginVertical: Pixel(50),
@@ -156,12 +161,12 @@ const styles = StyleSheet.create({
   codeTimerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:20
+    marginTop: 20
   },
   codeTimerText: {
     fontFamily: Fonts.regular,
     fontSize: Pixel(30),
-    color:"#9E9E9E"
+    color: "#9E9E9E"
   },
   resendText: {
     color: "#9E9E9E",

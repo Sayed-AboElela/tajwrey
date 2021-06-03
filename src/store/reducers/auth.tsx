@@ -61,7 +61,7 @@ export default (state = initialState, {type, payload}: IReduser) => {
       return {...state, loginErrors: payload};
     case ActionType.SAVE_CHANGE_PASSWORD_ERRORS:
       return {...state, changePasswordErrors: payload};
-    case ActionType.SAVE_FORGET_PASSWORD_ERORRS:
+    case ActionType.SAVE_FORGET_PASSWORD_ERRORS:
       return {...state, forgetPasswordErrors: payload};
     case ActionType.SAVE_PHONE:
       return {...state, phoneNumber: payload};

@@ -1,6 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {I18nManager, StyleSheet, TextInput, View} from 'react-native';
 import {Colors, Fonts} from '../../constants/styleConstants';
+
+const {isRTL} = I18nManager;
 
 interface ICodeInput {
   onChangeText?: (text: string) => void;
@@ -38,7 +40,7 @@ const CodeInput: FC<ICodeInput> = ({onChangeText, arrayWidth}) => {
   }, []);
   //onChangeText
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {flexDirection: isRTL ? 'row-reverse' : 'row',}]}>
       {[...Array(arrayWidth).keys()].map(index => (
         <View style={styles.textInpuContainer} key={index}>
           <TextInput
@@ -114,6 +116,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     textAlign: 'center',
     textAlignVertical: 'center',
-    color:'#707070'
+    color: '#707070'
   },
 });

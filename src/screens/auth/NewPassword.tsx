@@ -1,16 +1,16 @@
 import React, {createRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {AuthLogo, EyeIcon} from "../../assets/icons/SvgIcons";
+import {StyleSheet, View} from 'react-native';
+import {EyeIcon} from "../../assets/icons/SvgIcons";
 import {Container} from "../../components/containers/Containers";
 import Header from "../../components/header/Header";
 import {useTranslation} from "react-i18next";
 import {Colors, ColorWithOpacity, Fonts, Pixel} from "../../constants/styleConstants";
 import Input from "../../components/textInputs/Input";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store/store';
 import {InputErrorHandler} from '../../constants/helpers';
-import {LoginHandler} from '../../store/actions/auth';
+import {NewPasswordHandler} from '../../store/actions/auth';
 import IconTouchableContainer from "../../components/touchables/IconTouchableContainer";
 import Button from "../../components/touchables/Button";
 import {commonStyles} from "../../styles/styles";
@@ -18,17 +18,19 @@ import {commonStyles} from "../../styles/styles";
 const NewPassword = () => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
-  const {loginErrors} = useSelector((state: RootState) => state.auth);
+  const {changePasswordErrors} = useSelector((state: RootState) => state.auth);
+  const route = useRoute();
   const dispatch = useDispatch();
+
   const passwordConfirmRef = createRef();
   const [state, setstate] = useState({
     securePassword: true,
     securePasswordConfirm: true,
     loader: false,
     password: '',
-    passwordConfirm: '',
+    password_confirmation: '',
   });
-
+  console.log('route.params', route.params?.phone)
   const PasswordIcon = () => {
     return (
       <IconTouchableContainer
@@ -52,12 +54,11 @@ const NewPassword = () => {
   const submitHandler = () => {
     setstate(old => ({...old, loader: true}));
     console.log(state, ' state');
-    // dispatch(
-    //   LoginHandler(state.phone, state.password, success => {
-    //     setstate(old => ({...old, loader: false}));
-    //     success && navigate('Home');
-    //   }, () => navigate("PhoneCode")),
-    // );
+    dispatch(
+      NewPasswordHandler(route.params?.phone, state.password, state.password_confirmation, success => {
+        setstate(old => ({...old, loader: false}));
+        success && navigate('Login');
+      }));
   };
   return (
     <Container>
@@ -79,22 +80,22 @@ const NewPassword = () => {
               placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('New password')
             }}
-            erorrMessage={InputErrorHandler(loginErrors, 'password')}
+            erorrMessage={InputErrorHandler(changePasswordErrors, 'password')}
           />
           <Input
             rightContent={PasswordConfirmIcon}
             options={{
-              ref: ()=>passwordConfirmRef,
-              value: state.passwordConfirm,
+              ref: () => passwordConfirmRef,
+              value: state.password_confirmation,
               onChangeText: value => {
-                setstate(old => ({...old, passwordConfirm: value}));
+                setstate(old => ({...old, password_confirmation: value}));
               },
               secureTextEntry: state.securePasswordConfirm,
               onSubmitEditing: submitHandler,
               placeholderTextColor: ColorWithOpacity(Colors.gray, 0.5),
               placeholder: t('New password confirmation')
             }}
-            erorrMessage={InputErrorHandler(loginErrors, 'passwordConfirm')}
+            erorrMessage={InputErrorHandler(changePasswordErrors, 'password')}
           />
         </View>
         <View style={styles.submitContainer}>

@@ -23,6 +23,7 @@ const Register = () => {
   const {registerErrors} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const passwordConfirmRef = createRef();
+
   const [state, setstate] = useState({
     modalShow: false,
     securePassword: true,
@@ -38,6 +39,7 @@ const Register = () => {
     password: '',
     password_confirmation: '',
   });
+
   const toggleLangModal = () => {
     setstate(old => ({...old, modalShow: !old.modalShow}));
   };
@@ -56,6 +58,7 @@ const Register = () => {
       </IconTouchableContainer>
     );
   };
+
   const PasswordConfirmIcon = () => {
     return (
       <IconTouchableContainer
@@ -79,16 +82,16 @@ const Register = () => {
         state.password_confirmation,
         state.phone,
         state.selectedCity.city_id,
-        'token 93939',
-        'iphone',
         success => {
           setstate(old => ({...old, loader: false}));
           success ? console.log('register success') : console.log('register failed ');
-          success && navigate('Success');
+          success && navigate('PhoneCode', {phone: state.phone, navigateTo: 'Success'});
         }),
     );
   };
+
   console.log('registerErrors', registerErrors)
+
   return (
     <Container>
       <Header title={t('Register')}/>
@@ -266,7 +269,7 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     textAlign: 'center',
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.regular,
     fontSize: 14,
   },
 });

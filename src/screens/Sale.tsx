@@ -173,7 +173,7 @@ const Buy: FC = () => {
         />
         <View style={[styles.inputContainer, {justifyContent: 'center', alignItems: 'center'}]}>
           <Text style={styles.termsText}>{t('Your confirmation of the order means your approval')}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> navigate('Terms')}>
             <Text style={styles.termsBtnText}>{t('Terms and Conditions')}</Text>
           </TouchableOpacity>
         </View>

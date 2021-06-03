@@ -63,7 +63,7 @@ const Buy: FC = () => {
     setstate(old => ({...old, loader: true}));
     console.log(state, ' state');
     dispatch(
-      SendRequestHandler(state.name, state.phone, state.description, state.commission_source, state.type, state.cost,'buy', success => {
+      SendRequestHandler(state.name, state.phone, state.description, state.commission_source, state.type, state.cost, 'buy', success => {
         setstate(old => ({...old, loader: false}));
         success && navigate('Home');
       }),
@@ -177,7 +177,7 @@ const Buy: FC = () => {
 
         <View style={[styles.inputContainer, {justifyContent: 'center', alignItems: 'center'}]}>
           <Text style={styles.termsText}>{t('Your confirmation of the order means your approval')}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Terms')}>
             <Text style={styles.termsBtnText}>{t('Terms and Conditions')}</Text>
           </TouchableOpacity>
         </View>

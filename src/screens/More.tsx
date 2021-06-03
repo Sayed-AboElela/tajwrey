@@ -67,6 +67,7 @@ const More: FC = () => {
   const toggleLangModal = () => {
     setLangModalShow(!langModalShow);
   };
+
   const data = [
     {
       title: t('About'),
@@ -118,7 +119,6 @@ const More: FC = () => {
       title: t('Language'),
       icon: <LanguageIcon fill={ColorWithOpacity(Colors.dark, 0.6)}/>,
       onPress: () => {
-        console.log('adasd')
         toggleLangModal()
       },
     },

@@ -44,7 +44,7 @@ const Register = () => {
     setstate(old => ({...old, modalShow: !old.modalShow}));
   };
 
-  const handleSelectCity = (cityId: number, name: string) => {
+  const handleSelectCity = (cityId: string, name: string) => {
     setstate(old => ({...old, selectedCity: {city_id: cityId, name: name}}));
   }
 

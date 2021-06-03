@@ -43,7 +43,7 @@ const EditProfile: FC = () => {
     setstate(old => ({...old, modalShow: !old.modalShow}));
   };
 
-  const handleSelectCity = (cityId: number, name: string) => {
+  const handleSelectCity = (cityId: string, name: string) => {
     setstate(old => ({...old, selectedCity: {city_id: cityId, name: name}}));
   }
 
@@ -59,12 +59,21 @@ const EditProfile: FC = () => {
           quality: 0.5,
         },
         response => {
-          // console.log('responsepicImageHandler', response.assets[0].base64);
-          setstate((old: any) => ({
-            ...old,
-            image: response.assets[0].uri,
-            avatar: response.assets[0].base64,
-          }));
+          console.log('picImageHandlerresponse', response)
+          if (!response.didCancel) {
+            setstate((old: any) => ({
+              ...old,
+              image: response.assets[0].uri,
+              avatar: response.assets[0].base64,
+            }));
+          }
+          // if (response) {
+          //   setstate((old: any) => ({
+          //     ...old,
+          //     image: response.assets[0].uri,
+          //     avatar: response.assets[0].base64,
+          //   }));
+          // }
         },
       );
     } catch (error) {

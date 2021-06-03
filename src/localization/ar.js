@@ -46,6 +46,7 @@ export default {
   "Password confirmation": 'تأكيد كلمة المرور',
   "Enter the activation code": 'ادخل كود التفعيل',
   "Activation code": 'كود التفعيل',
+  "There are no bank accounts": 'لا يوجد حسابات بنكية',
   'Remaining': 'الوقت المتبقي',
   'Purchase order': 'طلب شراء',
   'Purchase': 'طلب شراء',

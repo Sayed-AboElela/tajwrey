@@ -1,4 +1,4 @@
-import React, {FC, useMemo, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Container, Content} from "../components/containers/Containers";
 import Header from "../components/header/Header";
@@ -9,51 +9,75 @@ import {Colors, ColorWithOpacity, Fonts, Pixel} from "../constants/styleConstant
 import CheckBox from "../components/CheckBox";
 import {DropdownArrowIcon} from "../assets/icons/SvgIcons";
 import {commonStyles} from "../styles/styles";
-import {LoginHandler} from "../store/actions/auth";
 import Button from "../components/touchables/Button";
+import {useNavigation} from "@react-navigation/native";
+import {SendRequestHandler} from "../store/actions/orders";
+import {useDispatch, useSelector} from "react-redux";
+import {InputErrorHandler} from "../constants/helpers";
+import {RootState} from "../store/store";
+import {ActionType} from "../store/actions/actions";
 
 const Buy: FC = () => {
+
   const {t} = useTranslation();
+
+  const {navigate} = useNavigation();
+  const dispatch = useDispatch();
+  const buyOrderErrors = useSelector((state: RootState) => state.orders.buyOrderErrors);
+
   const [state, setstate] = useState({
     loader: false,
+    name: '',
     phone: '',
-    commissionSourceId: 0,
-    type: 0,
+    commission_source: '',
+    description: '',
+    type: 1,
+    cost: '',
   });
 
-  const commission_source = [
+  const commission_sources = [
     {
-      id: 1,
+      id: '1',
       title: t('The first party requesting the request'),
     },
     {
-      id: 2,
+      id: '2',
       title: t('Second Party'),
     },
     {
-      id: 3,
+      id: '3',
       title: t('The two parties together'),
     }
   ]
 
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: ActionType.SAVE_BUY_ORDER_ERRORS,
+        payload: {},
+      });
+    }
+  }, []);
+
   const submitHandler = () => {
     setstate(old => ({...old, loader: true}));
     console.log(state, ' state');
-    // dispatch(
-    //   LoginHandler(state.phone, state.password, success => {
-    //     setstate(old => ({...old, loader: false}));
-    //     success && navigate('Home');
-    //   }, () => navigate("PhoneCode")),
-    // );
+    dispatch(
+      SendRequestHandler(state.name, state.phone, state.description, state.commission_source, state.type, state.cost,'buy', success => {
+        setstate(old => ({...old, loader: false}));
+        success && navigate('Home');
+      }),
+    );
   };
-  const commissionSourceOptions = useMemo(() => commission_source.map((item, index) => (
+
+  const commissionSourceOptions = useMemo(() => commission_sources.map((item, index) => (
     <CheckBox
       {...item}
-      onPress={() => setstate((old) => ({...old, commissionSourceId: item.id}))}
-      selected={state.commissionSourceId === item.id}
+      onPress={() => setstate((old) => ({...old, commission_source: item.id}))}
+      selected={state.commission_source === item.id}
       key={index}
     />
-  )), [state.commissionSourceId]);
+  )), [state.commission_source]);
 
   return (
     <Container>
@@ -63,12 +87,12 @@ const Buy: FC = () => {
           <Text style={styles.inputLabel}>{t("The seller's name")}</Text>
           <Input
             options={{
-              value: state.phone,
+              value: state.name,
               onChangeText: value => {
-                setstate(old => ({...old, phone: value}));
+                setstate(old => ({...old, name: value}));
               },
             }}
-            // erorrMessage={InputErrorHandler(loginErrors, 'phone')}
+            erorrMessage={InputErrorHandler(buyOrderErrors, 'name')}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -81,7 +105,7 @@ const Buy: FC = () => {
               },
               keyboardType: 'phone-pad',
             }}
-            // erorrMessage={InputErrorHandler(loginErrors, 'phone')}
+            erorrMessage={InputErrorHandler(buyOrderErrors, 'phone')}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -90,13 +114,13 @@ const Buy: FC = () => {
             contentContainerStyle={{borderRadius: Pixel(45)}}
             textInputContainer={{textAlignVertical: "top", height: Pixel(190),}}
             options={{
-              value: state.phone,
+              value: state.description,
               onChangeText: value => {
-                setstate(old => ({...old, phone: value}));
+                setstate(old => ({...old, description: value}));
               },
               multiline: true,
             }}
-            // erorrMessage={InputErrorHandler(loginErrors, 'phone')}
+            erorrMessage={InputErrorHandler(buyOrderErrors, 'description')}
           />
         </View>
 
@@ -104,30 +128,43 @@ const Buy: FC = () => {
           <Text
             style={styles.inputLabel}>{t("Application percentage of 5% of total purchase, select Parties to whom the percentage will be deducted")}</Text>
           {commissionSourceOptions}
+          {!!InputErrorHandler(buyOrderErrors, 'commission_source') && (
+            <View style={{marginBottom: 7, marginTop: 5}}>
+              <Text
+                style={[
+                  styles.errorMessage,
+                  {color: !!InputErrorHandler(buyOrderErrors, 'commission_source') ? Colors.warning : 'transparent'},
+                ]}>
+                {InputErrorHandler(buyOrderErrors, 'commission_source')}
+              </Text>
+            </View>
+          )}
         </View>
 
         <View style={[styles.inputContainer, {marginTop: 15}]}>
           <Text style={styles.inputLabel}>{t("Order type")}</Text>
-          <TouchableOpacity
+          <View
             style={styles.dropDown}
-            onPress={() => {
-              console.log('asd')
-            }}>
+            // onPress={() => {
+            //   console.log('asd')
+            // }}
+          >
             <Text style={styles.dropDownValue}>{t('Purchase')}</Text>
             <DropdownArrowIcon style={commonStyles.rtlRotate}/>
-          </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>{t("The cost of the order")}</Text>
           <Input
             options={{
-              value: state.phone,
+              value: state.cost,
               onChangeText: value => {
-                setstate(old => ({...old, phone: value}));
+                setstate(old => ({...old, cost: value}));
               },
+              keyboardType: 'number-pad'
             }}
-            // erorrMessage={InputErrorHandler(loginErrors, 'phone')}
+            erorrMessage={InputErrorHandler(buyOrderErrors, 'cost')}
           />
         </View>
 
@@ -135,7 +172,7 @@ const Buy: FC = () => {
           title={t('Confirmation')}
           onPress={submitHandler}
           loader={state.loader}
-          style={{marginBottom:20}}
+          style={{marginBottom: 20, marginTop: 10}}
         />
 
         <View style={[styles.inputContainer, {justifyContent: 'center', alignItems: 'center'}]}>
@@ -144,13 +181,8 @@ const Buy: FC = () => {
             <Text style={styles.termsBtnText}>{t('Terms and Conditions')}</Text>
           </TouchableOpacity>
         </View>
-
-
       </Content>
-
-
       <Footer/>
-
     </Container>
   );
 };
@@ -173,6 +205,7 @@ const styles = StyleSheet.create({
     // marginBottom: Pixel(17),
     alignSelf: 'flex-start',
     marginStart: Pixel(35),
+    textAlign: 'left'
   },
   dropDown: {
     ...commonStyles.rowBox,
@@ -203,5 +236,9 @@ const styles = StyleSheet.create({
     fontSize: Pixel(28),
     color: Colors.mainColor
   },
-
+  errorMessage: {
+    textAlign: 'center',
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+  },
 });

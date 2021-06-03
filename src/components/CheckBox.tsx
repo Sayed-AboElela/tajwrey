@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 
 interface ICheckBox {
-  id: number;
+  id: string;
   title: string;
   onPress: () => void;
   selected: boolean,

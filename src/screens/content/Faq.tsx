@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: Pixel(29),
     lineHeight: Pixel(55),
-    color: Colors.mainColor
+    color: Colors.mainColor,
+    textAlign:'left'
   }
 });
 

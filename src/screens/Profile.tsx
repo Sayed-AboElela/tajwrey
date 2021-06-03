@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import {DropdownArrowIcon, EditProfileIcon, NotificationIcon} from "../assets/icons/SvgIcons";
 import {commonStyles} from "../styles/styles";
 import Header from "../components/header/Header";
-import {Colors, ColorWithOpacity, Fonts, Pixel} from "../constants/styleConstants";
+import {Colors, ColorWithOpacity, Fonts, Images, Pixel} from "../constants/styleConstants";
 import {useNavigation} from "@react-navigation/native";
 import Button from "../components/touchables/Button";
 import {LogoutHandler} from "../store/actions/auth";
@@ -38,13 +38,13 @@ const Profile: FC = () => {
         <View style={styles.header}>
 
           <View style={styles.userContainer}>
-            {!!userData.avatar && userData.avatar !== "" && <View style={styles.userImage}>
+            <View style={styles.userImage}>
               <FastImage
                 style={{...commonStyles.image}}
                 resizeMode={'contain'}
-                source={{uri: userData.avatar}}
+                source={(userData.avatar && userData.avatar !== "") ? {uri: userData.avatar} : Images.userImage}
               />
-            </View>}
+            </View>
             <View style={styles.userInfo}>
               <Text style={styles.name}>{userData.name}</Text>
               <Text style={styles.phone}>{userData.phone}</Text>

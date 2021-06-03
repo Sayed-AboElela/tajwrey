@@ -6,7 +6,7 @@ import {commonStyles} from "../styles/styles";
 // import Icon from "react-native-vector-icons/FontAwesome5";
 /*************************************************************/
 interface IBankAccount {
-  id:nubmer;
+  id:number;
   title: string;
   image: string;
   account_owner: string;
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     color: Colors.mainColor,
     fontSize: Pixel(24),
     fontFamily: Fonts.medium,
+    textAlign:"left"
   },
   propertyValue: {
     color: ColorWithOpacity(Colors.dark,0.5),

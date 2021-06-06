@@ -3,6 +3,7 @@ import {ActionType} from '../actions/actions';
 
 const initialState = {
   orders: [],
+  searchResults: [],
   saleOrderErrors: {},
   buyOrderErrors: {}
 };
@@ -12,6 +13,8 @@ export default (state = initialState, {type, payload}: IReduser) => {
       return {...state, orders: payload};
     case ActionType.SAVE_BUY_ORDER_ERRORS:
       return {...state, buyOrderErrors: payload};
+    case ActionType.SAVE_SEARCH_RESULTS:
+      return {...state, searchResults: payload};
     case ActionType.SAVE_SALE_ORDER_ERRORS:
       return {...state, saleOrderErrors: payload};
   }

@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 import {Container} from "../components/containers/Containers";
 import Footer from "../components/containers/Footer";
 import {useTranslation} from "react-i18next";
-import {DropdownArrowIcon, EditProfileIcon, NotificationIcon} from "../assets/icons/SvgIcons";
+import {AcceptIcon, DropdownArrowIcon, EditProfileIcon, NotificationIcon} from "../assets/icons/SvgIcons";
 import {commonStyles} from "../styles/styles";
 import Header from "../components/header/Header";
 import {Colors, ColorWithOpacity, Fonts, Images, Pixel} from "../constants/styleConstants";
@@ -16,7 +16,8 @@ import {RootState} from "../store/store";
 
 const Profile: FC = () => {
   const userData: any = useSelector((state: RootState) => state.auth.userData);
-  const notifications: any = useSelector((state: RootState) => state.auth.notifications);
+  const notifications: any = useSelector((state: RootState) => state.settings.notifications);
+
 
   const {t} = useTranslation();
   const {navigate} = useNavigation();
@@ -51,10 +52,19 @@ const Profile: FC = () => {
             </View>
           </View>
 
+
           <TouchableOpacity style={styles.btnContainer} onPress={() => navigate('EditProfile')}>
             <View style={{...commonStyles.rowBox, justifyContent: 'space-between'}}>
               <EditProfileIcon fill={ColorWithOpacity("#000", 0.6)}/>
               <Text style={styles.btnTitle}>{t('Edit profile')}</Text>
+            </View>
+            <DropdownArrowIcon width={7.5} height={12} style={commonStyles.rtlRotate}/>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.btnContainer} onPress={() => navigate('Orders')}>
+            <View style={{...commonStyles.rowBox, justifyContent: 'space-between'}}>
+              <AcceptIcon fill={ColorWithOpacity("#000", 0.6)}/>
+              <Text style={styles.btnTitle}>{t('Orders')}</Text>
             </View>
             <DropdownArrowIcon width={7.5} height={12} style={commonStyles.rtlRotate}/>
           </TouchableOpacity>

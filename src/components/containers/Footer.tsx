@@ -13,14 +13,25 @@ const Footer: FC = () => {
   const route = useRoute();
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/mask.png')} resizeMode={'cover'} style={{
-        // flex: 1,
-        // justifyContent: "center",
-        // width:'100%',
-        // height:'100%',
-        flexDirection:'row'
-      }}>
+    <ImageBackground source={require('../../assets/images/mask-1.png')}  style={{
+      flex: 1,
+      // justifyContent: "center",
+      // width:'100%',
+      // height:'100%',
+      // flexDirection:'row',
+      // position: 'absolute',
+      // bottom: 0,
+      // right:0,
+      // left:0,
+      zIndex: 1000,
+      position: 'absolute',
+      bottom: -30,
+      right: 0,
+      left: 0,
+      // width: '160%',
+      // height: '100%',
+    }}>
+      <View style={styles.container}>
         <FooterTab
           active={route.name === 'Sale'}
           label={t('Sale')}
@@ -57,8 +68,8 @@ const Footer: FC = () => {
           Icon={() => <MoreIcon fill={route.name === 'More' ? Colors.secondColor : Colors.mainColor}/>}
           onPress={() => navigate('More')}
         />
-      </ImageBackground>
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -71,11 +82,11 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.white,
-    paddingHorizontal: 10,
-    height: Pixel(180),
-    paddingBottom: Pixel(50),
-    // paddingTop: Pixel(30),
+    // backgroundColor: Colors.white,
+    // height: Pixel(120),
+    // paddingHorizontal: 10,
+    // paddingBottom: Pixel(50),
+    paddingTop: Pixel(10),
     // shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,
@@ -84,10 +95,7 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.25,
     // shadowRadius: 3.84,
     // elevation: 5,
-    position: 'absolute',
-    bottom: 0,
-    right:0,
-    left:0
+
   },
   tabContainer: {
     backgroundColor: Colors.white,

@@ -4,8 +4,8 @@ import {Container, Content} from "../components/containers/Containers";
 import Header from "../components/header/Header";
 import {useTranslation} from "react-i18next";
 import {commonStyles} from "../styles/styles";
-import {SnapchatIcon} from "../assets/icons/SvgIcons";
-import {Colors, ColorWithOpacity, Fonts, Pixel} from "../constants/styleConstants";
+import FastImage from 'react-native-fast-image';
+import {Colors, ColorWithOpacity, Fonts, Images, Pixel} from "../constants/styleConstants";
 import Input from "../components/textInputs/Input";
 import {InputErrorHandler, OpenUrlHandler} from "../constants/helpers";
 import {useDispatch, useSelector} from "react-redux";
@@ -33,9 +33,19 @@ const ContactUs: FC = () => {
 
   const contactsMemo = useMemo(() => (
     contacts.map((item, index) => {
+      let image;
+      if(item.name === 'facebook'){
+        image = Images.facebook
+      }else if(item.name === 'twitter'){
+        image = Images.twitter
+      }else if(item.name === 'snapchat'){
+        image = Images.snapchat
+      }else if(item.name === 'instagram'){
+        image = Images.instagram
+      }
       return (
         <TouchableOpacity key={index} style={styles.socialItem} onPress={() => OpenUrlHandler(item.link)}>
-          <SnapchatIcon/>
+          <FastImage source={image} style={{width:40,height:40}} resizeMode={'contain'}/>
         </TouchableOpacity>
       )
     })
@@ -58,18 +68,6 @@ const ContactUs: FC = () => {
       <Content style={styles.container} contentContainerStyle={{marginTop: Pixel(60), paddingBottom: Pixel(120)}}>
         <Text style={styles.sectionTitle}>{t('Follow us on social media')}</Text>
         <View style={styles.socialContainer}>
-          {/*<TouchableOpacity style={styles.socialItem}>*/}
-          {/*  <SnapchatIcon/>*/}
-          {/*</TouchableOpacity>*/}
-          {/*<TouchableOpacity style={styles.socialItem}>*/}
-          {/*  <InstagramIcon/>*/}
-          {/*</TouchableOpacity>*/}
-          {/*<TouchableOpacity style={styles.socialItem}>*/}
-          {/*  <TwitterIcon/>*/}
-          {/*</TouchableOpacity>*/}
-          {/*<TouchableOpacity style={styles.socialItem}>*/}
-          {/*  <FacebookIcon/>*/}
-          {/*</TouchableOpacity>*/}
           {contactsMemo}
         </View>
 

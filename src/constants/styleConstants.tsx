@@ -46,7 +46,11 @@ export const Fonts = {
 };
 
 export enum Images {
-  userImage = require('../assets/images/def-avatar.png')
+  userImage = require('../assets/images/def-avatar.png'),
+  facebook = require('../assets/images/facebook-icon.png'),
+  twitter = require('../assets/images/twitter-icon.png'),
+  instagram = require('../assets/images/instagram-icon.png'),
+  snapchat = require('../assets/images/snapchat-icon.png'),
 }
 
 export enum ScreenOptions {

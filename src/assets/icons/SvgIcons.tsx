@@ -640,7 +640,6 @@ export const TwitterIcon = memo((props?: SvgProps) => (
 
 export const FacebookIcon = memo((props?: SvgProps) => (
   <Svg
-    xmlns="http://www.w3.org/2000/svg"
     width={40}
     height={40}
     viewBox="0 0 40 40"
@@ -660,7 +659,7 @@ export const FacebookIcon = memo((props?: SvgProps) => (
         transform="translate(84 141)"
         fill="#fff"
         fontSize={18}
-        fontFamily="FontAwesome5Brands-Regular, 'Font Awesome \\\\35 Brands'"
+        fontFamily="FontAwesome5Brands-Regular,'Font Awesome \\\\35 Brands'"
       >
         <TSpan x={-5.625} y={0}>
           {"\uF39E"}

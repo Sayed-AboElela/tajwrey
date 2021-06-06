@@ -59,7 +59,7 @@ const Onboarding: FC<ScreenProps> = ({navigation}) => {
             style={styles.skipButton}
             onPress={() => {
               scroll.current?.scrollTo({
-                x: !isRTL ? width * (index - data.length - 1) : width * (index + data.length - 1),
+                x: !isRTL ? width * (index + data.length - 1) : width * (index - data.length - 1),
                 animated: true,
               });
             }}>

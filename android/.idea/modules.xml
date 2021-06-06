@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tajwrey.iml" filepath="$PROJECT_DIR$/.idea/modules/tajwrey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/tajwrey.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/tajwrey.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-963604778/tajwrey.lottie-react-native.iml" filepath="$PROJECT_DIR$/.idea/modules/-963604778/tajwrey.lottie-react-native.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1648560501/tajwrey.react-native-async-storage_async-storage.iml" filepath="$PROJECT_DIR$/.idea/modules/-1648560501/tajwrey.react-native-async-storage_async-storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-179515997/tajwrey.react-native-community_checkbox.iml" filepath="$PROJECT_DIR$/.idea/modules/-179515997/tajwrey.react-native-community_checkbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-887050873/tajwrey.react-native-community_masked-view.iml" filepath="$PROJECT_DIR$/.idea/modules/-887050873/tajwrey.react-native-community_masked-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-67533265/tajwrey.react-native-device-info.iml" filepath="$PROJECT_DIR$/.idea/modules/-67533265/tajwrey.react-native-device-info.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/838002368/tajwrey.react-native-fast-image.iml" filepath="$PROJECT_DIR$/.idea/modules/838002368/tajwrey.react-native-fast-image.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1585921005/tajwrey.react-native-firebase_app.iml" filepath="$PROJECT_DIR$/.idea/modules/-1585921005/tajwrey.react-native-firebase_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-702449546/tajwrey.react-native-firebase_messaging.iml" filepath="$PROJECT_DIR$/.idea/modules/-702449546/tajwrey.react-native-firebase_messaging.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1552535248/tajwrey.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-1552535248/tajwrey.react-native-gesture-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/282670563/tajwrey.react-native-image-crop-picker.iml" filepath="$PROJECT_DIR$/.idea/modules/282670563/tajwrey.react-native-image-crop-picker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1760886134/tajwrey.react-native-rate.iml" filepath="$PROJECT_DIR$/.idea/modules/1760886134/tajwrey.react-native-rate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1847562516/tajwrey.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-1847562516/tajwrey.react-native-reanimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1033182855/tajwrey.react-native-restart.iml" filepath="$PROJECT_DIR$/.idea/modules/-1033182855/tajwrey.react-native-restart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-981353063/tajwrey.react-native-safe-area-context.iml" filepath="$PROJECT_DIR$/.idea/modules/-981353063/tajwrey.react-native-safe-area-context.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-456681231/tajwrey.react-native-screens.iml" filepath="$PROJECT_DIR$/.idea/modules/-456681231/tajwrey.react-native-screens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1847919159/tajwrey.react-native-share.iml" filepath="$PROJECT_DIR$/.idea/modules/-1847919159/tajwrey.react-native-share.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1231024590/tajwrey.react-native-svg.iml" filepath="$PROJECT_DIR$/.idea/modules/1231024590/tajwrey.react-native-svg.iml" />
+    </modules>
+  </component>
+</project>

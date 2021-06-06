@@ -12,11 +12,11 @@ import Button from "../../components/touchables/Button";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import {launchImageLibrary} from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
 import CitiesModal from "../../components/CitiesModal";
 import {updateProfile} from "../../store/actions/auth";
 import {InputErrorHandler} from "../../constants/helpers";
+import ImagePicker from 'react-native-image-crop-picker';
 
 const EditProfile: FC = () => {
 
@@ -52,30 +52,36 @@ const EditProfile: FC = () => {
 
   const picImageHandler = async () => {
     try {
-      launchImageLibrary(
-        {
-          includeBase64: true,
-          mediaType: 'photo',
-          quality: 0.5,
-        },
-        response => {
-          console.log('picImageHandlerresponse', response)
-          if (!response.didCancel) {
-            setstate((old: any) => ({
-              ...old,
-              image: response.assets[0].uri,
-              avatar: response.assets[0].base64,
-            }));
-          }
-          // if (response) {
-          //   setstate((old: any) => ({
-          //     ...old,
-          //     image: response.assets[0].uri,
-          //     avatar: response.assets[0].base64,
-          //   }));
-          // }
-        },
-      );
+      // launchImageLibrary(
+      //   {
+      //     includeBase64: true,
+      //     mediaType: 'photo',
+      //     quality: 0.5,
+      //   },
+      //   response => {
+      //     console.log('picImageHandlerresponse', response)
+      //     if (!response.didCancel) {
+      //       setstate((old: any) => ({
+      //         ...old,
+      //         image: response.assets[0].uri,
+      //         avatar: response.assets[0].base64,
+      //       }));
+      //     }
+      //   },
+      // );
+      ImagePicker.openPicker({
+        width: 400,
+        height: 400,
+        cropping: false,
+        includeBase64: true,
+        // multiple: true,
+      }).then((image) => {
+        setstate((old: any) => ({
+          ...old,
+          image: image.path,
+          avatar: image.data,
+        }));
+      });
     } catch (error) {
       console.log(error);
     }

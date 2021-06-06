@@ -8,35 +8,45 @@ import IconTouchableContainer from '../touchables/IconTouchableContainer';
 import {useTranslation} from 'react-i18next';
 import Input from '../textInputs/Input';
 import {useNavigation} from "@react-navigation/native";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 
 interface IHeader {
   title?: string;
   containerStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
+  handleSearch?: (request_id: string) => void;
 }
 
-const SearchSubmitBtn = () => {
-  return (
-    <IconTouchableContainer style={styles.submitSearchBtn}>
-      <SearchIcon/>
-    </IconTouchableContainer>
-  );
-};
 
 const HomeHeader: FC<NavigationProps & IHeader> = ({
                                                      title,
                                                      containerStyle,
                                                      titleStyle,
+                                                     handleSearch,
                                                    }) => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
-  const notifications: any = useSelector((state: RootState) => state.auth.notifications);
+  const dispatch = useDispatch();
+  const notifications: any = useSelector((state: RootState) => state.settings.notifications);
   const [state, setstate] = useState({
     searchKeyword: '',
   });
 
+  const searchHandler = () => {
+    // dispatch(
+    //
+    // )
+  }
+
+  const SearchSubmitBtn = () => {
+    return (
+      <IconTouchableContainer style={styles.submitSearchBtn}
+                              onPress={() => (handleSearch && state.searchKeyword !== '') && handleSearch(state.searchKeyword)}>
+        <SearchIcon/>
+      </IconTouchableContainer>
+    );
+  };
   return (
     <View style={[styles.mainContainer, containerStyle]}>
       <View style={[styles.rowConatiner]}>
@@ -48,8 +58,10 @@ const HomeHeader: FC<NavigationProps & IHeader> = ({
           <Input
             textInputContainer={{height: Pixel(60), padding: 0, fontSize: Pixel(25)}}
             rightContent={SearchSubmitBtn}
-            iconRightStyle={{ top: 5,
-              right: 10,}}
+            iconRightStyle={{
+              top: 5,
+              right: 10,
+            }}
             options={{
               value: state.searchKeyword,
               onChangeText: value => {

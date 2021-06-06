@@ -8,9 +8,26 @@ import {useTranslation} from "react-i18next";
 import {BuyHomeIcon, SaleHomeIcon} from "../assets/icons/SvgIcons";
 import OrdersList from "../components/Home/OrdersList";
 import {Colors, ColorWithOpacity, Fonts, Pixel} from "../constants/styleConstants";
+import {useDispatch} from "react-redux";
+import {searchOrdersApi} from "../store/actions/orders";
+import {useNavigation} from "@react-navigation/native";
 
 const Home: FC = () => {
   const {t} = useTranslation();
+  const {navigate} = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleSearch = (request_id: string) => {
+    dispatch(
+      searchOrdersApi(request_id, (success => {
+            success && navigate('Search')
+            success && console.log('searchOrdersApi success')
+          }
+        )
+      )
+    )
+  }
+
 
   const orderTypeData = [
     {
@@ -28,7 +45,7 @@ const Home: FC = () => {
   return (
     <Container>
       <View style={{paddingHorizontal: 15}}>
-        <HomeHeader/>
+        <HomeHeader handleSearch={handleSearch}/>
         <HomeSlider/>
         <OrdersList data={orderTypeData}/>
         <Text

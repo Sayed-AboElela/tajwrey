@@ -29,4 +29,5 @@ export enum ActionType {
   SAVE_BANKS,
   SAVE_BANKS_ERRORS,
   SAVE_ADD_BANK_ERRORS,
+  SAVE_SEARCH_RESULTS,
 }

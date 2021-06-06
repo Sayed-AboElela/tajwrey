@@ -23,7 +23,8 @@ export const RegisterHandler = (
 
     try {
       let type = getDeviceType();
-      let uniqueId = getUniqueId();
+      // let uniqueId = getUniqueId();
+      const token = await getItem(AsyncKeys.NOTFICTION_TOKEN);
 
       const {data} = await axiosAPI.post('register', {
         name,
@@ -32,7 +33,7 @@ export const RegisterHandler = (
         password,
         password_confirmation,
         city_id,
-        "device_token": `token ${uniqueId}`,
+        "device_token": `token ${token}`,
         "device_type": type
       });
       console.log('RegisterHandler data', data.data.user);
@@ -71,11 +72,12 @@ export const LoginHandler = (
   return async (dispatch: Dispatch<IDispatch>) => {
     try {
       let type = getDeviceType();
-      let uniqueId = getUniqueId();
+      // let uniqueId = getUniqueId();
+      const token = await getItem(AsyncKeys.NOTFICTION_TOKEN);
       const {data} = await axiosAPI.post('login', {
         phone,
         password,
-        "device_token": `token ${uniqueId}`,
+        "device_token": `token ${token}`,
         "device_type": type
       });
 

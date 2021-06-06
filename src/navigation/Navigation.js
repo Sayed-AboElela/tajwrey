@@ -29,6 +29,8 @@ import Onboarding from "../screens/Onboarding";
 import {getItem} from "../constants/helpers";
 import NewBank from "../screens/banks/NewBank";
 import EditBank from "../screens/banks/EditBank";
+import Orders from "../screens/Orders";
+import Search from "../screens/Search";
 // import {onboarding} from "../store/selectors/SettingsSelectors";
 
 const Stack = createStackNavigator();
@@ -128,6 +130,8 @@ const Stacks = () => {
       <Stack.Screen name="Banks" component={Banks}/>
       <Stack.Screen name="NewBank" component={NewBank}/>
       <Stack.Screen name="EditBank" component={EditBank}/>
+      <Stack.Screen name="Orders" component={Orders}/>
+      <Stack.Screen name="Search" component={Search}/>
       <Stack.Screen name="ContactUs" component={ContactUs}/>
       <Stack.Screen name="Terms" component={Terms}/>
       <Stack.Screen name="Privacy" component={Privacy}/>

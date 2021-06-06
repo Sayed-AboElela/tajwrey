@@ -6,16 +6,16 @@ import {commonStyles} from "../../styles/styles";
 const {isRTL} = I18nManager;
 
 interface INotificationItem {
-  id: number;
-  title: string;
-  date: number;
+  id: string;
+  body: string;
+  create_at: string;
   onPress: () => void;
 }
 
 const NotificationItem: FC<INotificationItem> = ({
                                                    id,
-                                                   title,
-                                                   date,
+                                                   body,
+                                                   create_at,
                                                    onPress
                                                  }) => {
   return (
@@ -23,8 +23,8 @@ const NotificationItem: FC<INotificationItem> = ({
       onPress={onPress}
       key={id}
       style={[styles.container]}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.date}>{date}</Text>
+      <Text style={styles.title}>{body}</Text>
+      <Text style={styles.date}>{create_at}</Text>
     </TouchableOpacity>
   );
 };
@@ -37,20 +37,23 @@ const styles = StyleSheet.create({
     ...commonStyles.boxShadow,
     marginTop: 15,
     borderRadius: 15,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    marginBottom:5
   },
   title: {
     fontFamily: Fonts.medium,
     fontSize: Pixel(26),
     marginBottom: 7,
     color: Colors.mainColor,
-    textAlign:  'left',
+    // textAlign:  'left',
+    alignSelf:'flex-start'
   },
   date: {
     fontFamily: Fonts.regular,
     fontSize: Pixel(25),
     color: ColorWithOpacity(Colors.dark, 0.5),
     marginTop: Pixel(15),
+    alignSelf:'flex-start'
   },
 });
 

@@ -1,57 +1,65 @@
-import React, {FC} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Container} from "../components/containers/Containers";
 import Footer from "../components/containers/Footer";
 import {useTranslation} from "react-i18next";
-import NotificationHeader from "../components/header/CustomHeader";
+import CustomHeader from "../components/header/CustomHeader";
 import NotificationItem from "../components/Notification/NotificationItem";
 import {useNavigation} from "@react-navigation/native";
-import CustomHeader from "../components/header/CustomHeader";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store/store";
+import {deleteNotificationsApi, notificationsApi} from "../store/actions/settings";
+import EmptyList from "../components/EmptyList";
+import IconTouchableContainer from "../components/touchables/IconTouchableContainer";
+import {TrashIcon} from "../assets/icons/SvgIcons";
+import {Colors} from "../constants/styleConstants";
+import PageLoader from "../components/PageLoader";
 
 const Notifications: FC = () => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
-  const data = [
-    {
-      id: 1,
-      title: t('The purchase order has been confirmed by the first party, confirm the payment to finish the process'),
-      date: new Date().getDate(),
-      onPress: () => {
-        navigate('NotificationDetail')
-      }
-    },
-    {
-      id: 2,
-      title: t('The purchase order has been confirmed by the first party, confirm the payment to finish the process'),
-      date: new Date().getDate(),
-      onPress: () => {
-        navigate('NotificationDetail')
-      }
-    },
-    {
-      id: 3,
-      title: t('The purchase order has been confirmed by the first party, confirm the payment to finish the process'),
-      date: new Date().getDate(),
-      onPress: () => {
-        navigate('NotificationDetail')
-      }
-    },
-  ];
+  const [state, setstate] = useState({loader: true});
+  const notifications: any = useSelector((state: RootState) => state.settings.notifications);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('notifications', notifications)
+    dispatch(notificationsApi((success) => success && setstate(old => ({...old, loader: false}))));
+  }, []);
+
+
+  const deleteHandler = () => {
+    dispatch(deleteNotificationsApi((success) => success && setstate(old => ({...old, loader: false}))));
+  }
+
+  const RightHeaderAction = () => {
+    return (
+      <IconTouchableContainer dark onPress={deleteHandler}>
+        <TrashIcon fill={Colors.mainColor}/>
+      </IconTouchableContainer>
+    )
+  };
   return (
     <Container>
-      <CustomHeader title={t('Notifications')}/>
-      <FlatList
-        contentContainerStyle={{paddingHorizontal: 25}}
-        data={data}
-        renderItem={({item}) => <NotificationItem {...item}/>}
-        keyExtractor={item => item.id.toString()}
-      />
+      <CustomHeader rightContent={notifications.length > 0 ? RightHeaderAction : () => <View/>}
+                    title={t('Notifications')}/>
+      {state.loader ? (<PageLoader/>) : (
+        <FlatList
+          contentContainerStyle={{paddingHorizontal: 25}}
+          data={notifications}
+          renderItem={({item}) => <NotificationItem {...item}/>}
+          ListEmptyComponent={() => <EmptyList text={t('There are no notifications')}/>}
+          keyExtractor={item => item.id.toString()}
+        />)}
       <Footer/>
     </Container>
   );
 };
 
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+}
+);
 
 export default Notifications;

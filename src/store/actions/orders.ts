@@ -9,18 +9,39 @@ export const saveOrders = (payload: []) => ({
   payload,
 });
 
-export const ordersApi = () => {
+export const saveSearchResults = (payload: []) => ({
+  type: ActionType.SAVE_SEARCH_RESULTS,
+  payload,
+});
+
+export const ordersApi = (cb: (success?: boolean) => void) => {
   return async (dispatch: Dispatch<any>) => {
     try {
       const {data} = await axiosAPI.get(`requests`);
       console.log('ordersApi response', data)
       dispatch(saveOrders(data.data));
+      cb(true);
     } catch (error) {
+      cb(false);
       console.log('ordersApi Error', error?.response);
     }
   };
 };
 
+export const searchOrdersApi = (request_id: string, cb: (success?: boolean) => void) => {
+  return async (dispatch: Dispatch<any>) => {
+    console.log('searchOrdersApi request_id', request_id)
+    try {
+      const {data} = await axiosAPI.get(`requests?request_id=${request_id}`);
+      console.log('searchOrdersApi response', data)
+      dispatch(saveSearchResults(data.data));
+      cb(true);
+    } catch (error) {
+      cb(false);
+      console.log('searchOrdersApi Error', error);
+    }
+  };
+};
 
 export const SendRequestHandler = (
   name: string,

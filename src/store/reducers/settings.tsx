@@ -7,6 +7,7 @@ const initialState = {
   onboarding: null,
   cities: [],
   banners: [],
+  notifications: [],
   contacts: [],
   pages: [],
   contactsUsErrors: {},
@@ -27,6 +28,8 @@ export default (state = initialState, action: IReduser) => {
       return {...state, contactsUsErrors: action.payload};
     case ActionType.SAVE_PAGES:
       return {...state, pages: action.payload};
+    case ActionType.SAVE_NOTIFICATIONS:
+      return {...state, notifications: action.payload};
     case ActionType.TOGGLE_LOADER:
       return {...state, preloaderVisible: action.payload};
 

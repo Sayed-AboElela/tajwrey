@@ -4,7 +4,7 @@ import {ActionType} from '../actions/actions';
 const initialState = {
   isLogin: false,
   userData: {},
-  notifications: [],
+  // notifications: [],
   registerErrors: {},
   loginErrors: {},
   forgetPasswordErrors: {},
@@ -36,11 +36,11 @@ export default (state = initialState, {type, payload}: IReduser) => {
         userData: payload,
         isLogin: true,
       };
-    case ActionType.SAVE_NOTIFICATIONS:
-      return {
-        ...state,
-        notifications: payload,
-      };
+    // case ActionType.SAVE_NOTIFICATIONS:
+    //   return {
+    //     ...state,
+    //     notifications: payload,
+    //   };
     case ActionType.SAVE_USER_DATA_AFTER_VERIFY:
       return {
         ...state,

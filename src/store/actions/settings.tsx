@@ -28,6 +28,10 @@ export const savePages = (payload: []) => ({
   type: ActionType.SAVE_PAGES,
   payload,
 });
+export const saveNotifications = (payload: []) => ({
+  type: ActionType.SAVE_NOTIFICATIONS,
+  payload,
+});
 
 export const saveBanners = (payload: []) => ({
   type: ActionType.SAVE_BANNERS,
@@ -99,6 +103,33 @@ export const pagesApi = () => {
   };
 };
 
+export const notificationsApi = (cb: (success?: boolean) => void) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      const {data} = await axiosAPI.get(`notifications`);
+      console.log('notificationsApi response', data)
+      dispatch(saveNotifications(data.data));
+      cb(true);
+    } catch (error) {
+      cb(false);
+      console.log('notificationsApi Error', error?.response);
+    }
+  };
+};
+
+export const deleteNotificationsApi = (cb: (success?: boolean) => void) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      const {data} = await axiosAPI.post(`notifications/delete-all`);
+      // console.log('notificationsApi response', data)
+      dispatch(saveNotifications([]));
+      cb(true);
+    } catch (error) {
+      cb(false);
+      console.log('notificationsApi Error', error?.response);
+    }
+  };
+};
 export const sendContactApi = (
   full_name: string,
   mobile_number: string,
@@ -140,10 +171,11 @@ export const sendContactApi = (
 export const initializApp = () => {
   return async (dispatch: Dispatch<any>, getState: () => RootState) => {
     try {
-      if (getState().auth.userData?.token !== undefined) {
-        dispatch(bannersApi());
-        dispatch(contactsApi());
-      }
+      // if (getState().auth.userData?.token !== undefined) {
+      dispatch(notificationsApi());
+      dispatch(bannersApi());
+      dispatch(contactsApi());
+      // }
       dispatch(citiesApi());
       dispatch(loadApp());
     } catch (error) {

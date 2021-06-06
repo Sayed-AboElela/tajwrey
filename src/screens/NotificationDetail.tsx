@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Container} from "../components/containers/Containers";
 import Footer from "../components/containers/Footer";
 import {useTranslation} from "react-i18next";
-import NotificationHeader from "../components/header/NotificationHeader";
+import NotificationHeader from "../components/header/CustomHeader";
 import Button from "../components/touchables/Button";
 import {Colors, Fonts, Pixel} from "../constants/styleConstants";
 

@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Platform, StyleProp, StyleSheet, Text, TextStyle, View, ViewStyle,} from 'react-native';
 import {Colors, Fonts, Pixel, ScreenOptions,} from '../../constants/styleConstants';
 import {commonStyles} from '../../styles/styles';
-import {ArrowRightIcon, TrashIcon} from '../../assets/icons/SvgIcons';
+import {ArrowRightIcon} from '../../assets/icons/SvgIcons';
 import IconTouchableContainer from '../touchables/IconTouchableContainer';
 import {useNavigation} from '@react-navigation/native';
 
@@ -11,9 +11,16 @@ interface IHeader {
   containerStyle?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
   noBack?: boolean;
+  rightContent?: () => JSX.Element;
 }
 
-const NotificationHeader: FC<IHeader> = ({title, noBack, containerStyle, titleStyle}) => {
+const CustomHeader: FC<IHeader> = ({
+                                     title,
+                                     noBack,
+                                     containerStyle,
+                                     titleStyle,
+                                     rightContent,
+                                   }) => {
   const {goBack} = useNavigation();
   return (
     <View style={[styles.container, containerStyle]}>
@@ -32,11 +39,11 @@ const NotificationHeader: FC<IHeader> = ({title, noBack, containerStyle, titleSt
           </Text>
         </View>
       )}
-      <IconTouchableContainer dark onPress={() => {
-        console.log('trash pressed')
-      }} style={styles.icons}>
-        <TrashIcon/>
-      </IconTouchableContainer>
+      {rightContent && (
+        <View style={[styles.icons]}>
+          {rightContent()}
+        </View>
+      )}
     </View>
   );
 };
@@ -98,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationHeader;
+export default CustomHeader;

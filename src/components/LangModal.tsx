@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     paddingHorizontal: Pixel(50),
-    paddingBottom: 40,
+    paddingBottom: 60,
     paddingTop: 20,
   },
   head: {

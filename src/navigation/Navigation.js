@@ -20,13 +20,15 @@ import NotificationDetail from "../screens/NotificationDetail";
 import EditProfile from "../screens/auth/EditProfile";
 import ChangePassword from "../screens/auth/ChangePassword";
 import About from "../screens/About";
-import Banks from "../screens/Banks";
+import Banks from "../screens/banks/Banks";
 import Terms from "../screens/content/Terms";
 import ContactUs from "../screens/ContactUs";
 import Privacy from "../screens/content/Privacy";
 import Faq from "../screens/content/Faq";
 import Onboarding from "../screens/Onboarding";
 import {getItem} from "../constants/helpers";
+import NewBank from "../screens/banks/NewBank";
+import EditBank from "../screens/banks/EditBank";
 // import {onboarding} from "../store/selectors/SettingsSelectors";
 
 const Stack = createStackNavigator();
@@ -124,6 +126,8 @@ const Stacks = () => {
       <Stack.Screen name="NotificationDetail" component={NotificationDetail}/>
       <Stack.Screen name="About" component={About}/>
       <Stack.Screen name="Banks" component={Banks}/>
+      <Stack.Screen name="NewBank" component={NewBank}/>
+      <Stack.Screen name="EditBank" component={EditBank}/>
       <Stack.Screen name="ContactUs" component={ContactUs}/>
       <Stack.Screen name="Terms" component={Terms}/>
       <Stack.Screen name="Privacy" component={Privacy}/>

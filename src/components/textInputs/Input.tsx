@@ -68,8 +68,6 @@ const Input: React.FC<Props> = ({
   );
 };
 
-export default Input;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
@@ -108,3 +106,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+export default Input;

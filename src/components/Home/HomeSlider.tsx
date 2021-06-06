@@ -8,6 +8,8 @@ import Animated from 'react-native-reanimated';
 import { SvgProps } from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
 import { commonStyles } from '../../styles/styles';
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
 
 const { width } = Dimensions.get('window');
 let slideWidth = width - 30;
@@ -17,6 +19,7 @@ interface ISlide {
 }
 
 const HomeSlider: FC = () => {
+    const banners = useSelector((state: RootState) => state.settings.banners);
     const data = useState([
         {
             image: require('../../assets/images/homeSlider1.png'),
@@ -87,7 +90,8 @@ const HomeSlider: FC = () => {
             ref={scroll}
             horizontal
             snapToInterval={slideWidth}
-            contentContainerStyle={{ backgroundColor: Colors.white, height: Pixel(400),marginBottom:20 }}
+            contentContainerStyle={{ backgroundColor: Colors.white, height: Pixel(400),marginBottom:20,
+                borderRadius:15 }}
             snapToAlignment={'center'}
             disableIntervalMomentum={true}
             decelerationRate="fast"

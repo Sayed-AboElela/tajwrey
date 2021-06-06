@@ -17,7 +17,7 @@ interface IHeader {
   titleStyle?: StyleProp<TextStyle>;
 }
 
-const SearchSubmitBtn: FC = () => {
+const SearchSubmitBtn = () => {
   return (
     <IconTouchableContainer style={styles.submitSearchBtn}>
       <SearchIcon/>
@@ -47,6 +47,9 @@ const HomeHeader: FC<NavigationProps & IHeader> = ({
         <View style={styles.centerContainer}>
           <Input
             textInputContainer={{height: Pixel(60), padding: 0, fontSize: Pixel(25)}}
+            rightContent={SearchSubmitBtn}
+            iconRightStyle={{ top: 5,
+              right: 10,}}
             options={{
               value: state.searchKeyword,
               onChangeText: value => {

@@ -53,7 +53,7 @@ const Profile: FC = () => {
 
           <TouchableOpacity style={styles.btnContainer} onPress={() => navigate('EditProfile')}>
             <View style={{...commonStyles.rowBox, justifyContent: 'space-between'}}>
-              <EditProfileIcon/>
+              <EditProfileIcon fill={ColorWithOpacity("#000", 0.6)}/>
               <Text style={styles.btnTitle}>{t('Edit profile')}</Text>
             </View>
             <DropdownArrowIcon width={7.5} height={12} style={commonStyles.rtlRotate}/>

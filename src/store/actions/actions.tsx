@@ -28,4 +28,5 @@ export enum ActionType {
   SAVE_BUY_ORDER_ERRORS,
   SAVE_BANKS,
   SAVE_BANKS_ERRORS,
+  SAVE_ADD_BANK_ERRORS,
 }

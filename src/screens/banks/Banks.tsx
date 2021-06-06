@@ -1,0 +1,61 @@
+import React, {FC, useEffect, useState} from 'react';
+import {Dimensions, FlatList, StyleSheet} from 'react-native';
+import {Container} from "../../components/containers/Containers";
+import {useTranslation} from "react-i18next";
+import BankAccount from "../../components/BankAccount";
+import {useDispatch, useSelector} from "react-redux";
+import {banksApi} from "../../store/actions/banks";
+import PageLoader from "../../components/PageLoader";
+import {RootState} from "../../store/store";
+import EmptyList from "../../components/EmptyList";
+import CustomHeader from "../../components/header/CustomHeader";
+import {PlusIcon} from "../../assets/icons/SvgIcons";
+import IconTouchableContainer from "../../components/touchables/IconTouchableContainer";
+import {useNavigation} from "@react-navigation/native";
+
+const {width, height} = Dimensions.get('window');
+
+const Banks: FC = () => {
+  const {t} = useTranslation();
+  const {navigate} = useNavigation();
+  const dispatch = useDispatch();
+  const [state, setstate] = useState({loader: true});
+  const banks = useSelector((state: RootState) => state.banks.banks);
+
+  useEffect(() => {
+    dispatch(banksApi(
+      (success) => success && setstate(old => ({...old, loader: false}))
+    ));
+  }, []);
+
+  const RightHeaderAction = () => {
+    return (
+      <IconTouchableContainer dark onPress={() => navigate('NewBank')}>
+        <PlusIcon/>
+      </IconTouchableContainer>
+    )
+  };
+
+  return (
+    <Container>
+      <CustomHeader rightContent={RightHeaderAction} title={t('Banks')}/>
+      {state.loader ? (<PageLoader/>) : (
+        <FlatList
+          data={banks}
+          renderItem={({item}) => (<BankAccount {...item}/>)}
+          ListEmptyComponent={() => <EmptyList text={t('There are no bank accounts')}/>}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      )}
+    </Container>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
+
+
+export default Banks;

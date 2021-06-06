@@ -3,9 +3,10 @@ import {FlatList, StyleSheet} from 'react-native';
 import {Container} from "../components/containers/Containers";
 import Footer from "../components/containers/Footer";
 import {useTranslation} from "react-i18next";
-import NotificationHeader from "../components/header/NotificationHeader";
+import NotificationHeader from "../components/header/CustomHeader";
 import NotificationItem from "../components/Notification/NotificationItem";
 import {useNavigation} from "@react-navigation/native";
+import CustomHeader from "../components/header/CustomHeader";
 
 const Notifications: FC = () => {
   const {t} = useTranslation();
@@ -38,7 +39,7 @@ const Notifications: FC = () => {
   ];
   return (
     <Container>
-      <NotificationHeader title={t('Notifications')}/>
+      <CustomHeader title={t('Notifications')}/>
       <FlatList
         contentContainerStyle={{paddingHorizontal: 25}}
         data={data}

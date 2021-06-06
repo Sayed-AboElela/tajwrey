@@ -2,7 +2,7 @@ export default {
   Login: 'تسجيل الدخول',
   Register: 'تسجيل جديد',
   'Forgot Password?': 'نسيت كلمة المرور؟',
-  Profile: 'الملف الشخصي',
+  Profile: 'حسابي',
   Save: 'حفظ',
   Reset: 'إعادة تعيين',
   Logout: 'تسجل الخروج',
@@ -22,6 +22,7 @@ export default {
   'Terms and Conditions': 'الشروط والأحكام',
   Send: 'إرسال',
   "Password Reset": 'إعادة تعيين كلمة المرور',
+  "New bank account": 'حساب بنكي جديد',
   "Your confirmation of the order means your approval": 'تأكيدك للطلب يعني موافقتك على',
   "Search by order number": 'البحث برقم الطلب',
   "Confirmation": 'تأكيد الطلب',
@@ -91,5 +92,8 @@ export default {
   'Account number': 'رقم الحساب',
   'Account owner': 'اسم صاحب الحساب',
   'Bank name': 'اسم البنك',
+  "Cancel": 'الغاء',
+  "OK": 'نعم',
+  "Do you want to delete the bank account?": "هل تريد حذف الحساب البنكي؟",
 
 };

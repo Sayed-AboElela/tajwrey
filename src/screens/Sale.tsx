@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/store";
 import {SendRequestHandler} from "../store/actions/orders";
 
-const Buy: FC = () => {
+const Sale: FC = () => {
   const {t} = useTranslation();
   const {navigate} = useNavigation();
   const dispatch = useDispatch();
@@ -183,7 +183,6 @@ const Buy: FC = () => {
   );
 };
 
-export default Buy;
 
 const styles = StyleSheet.create({
   container: {
@@ -192,7 +191,6 @@ const styles = StyleSheet.create({
     // backgroundColor: '#f1f1f1',
   },
   inputContainer: {
-    // marginVertical: 5,
     marginTop: 7,
   },
   inputLabel: {
@@ -238,3 +236,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+export default Sale;

@@ -13,8 +13,8 @@ const {isRTL} = I18nManager;
 interface ICitiesModal {
   showProp: boolean;
   toggleLangModal: () => void;
-  handleSelectCity: (cityId:number, name:string) => void;
-  selectedCity:{ city_id:number,  name:string }
+  handleSelectCity: (cityId:string, name:string) => void;
+  selectedCity:{ city_id:string,  name:string }
 }
 
 const CitiesModal: FC<ICitiesModal> = ({showProp, toggleLangModal, handleSelectCity,selectedCity}) => {

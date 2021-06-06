@@ -7,10 +7,12 @@ import Svg, {
   G,
   Image,
   LinearGradient,
-  Path, Pattern,
+  Path,
+  Pattern,
   Rect,
   Stop,
-  SvgProps, TSpan,
+  SvgProps,
+  TSpan,
   Use,
 } from "react-native-svg"
 import {Text} from "react-native";
@@ -368,7 +370,7 @@ export const AboutSvg = memo((props: SvgProps) => {
           />
         </Pattern>
       </Defs>
-      <Rect width={343} height={191} rx={10} fill="url(#prefix__a)" />
+      <Rect width={343} height={191} rx={10} fill="url(#prefix__a)"/>
     </Svg>
   )
 })
@@ -540,8 +542,8 @@ export const TrashIcon = memo((props?: SvgProps) => (
     {...props}
   >
     <G
-      fill="none"
-      stroke="#1b2b5d"
+      fill={"none"}
+      stroke={props?.fill !== "" ? props?.fill : "#1b2b5d"}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit={10}
@@ -579,7 +581,6 @@ export const SnapchatIcon = memo((props?: SvgProps) => (
         fill="#fff"
         stroke="#000"
         fontSize={18}
-        fontFamily="FontAwesome5Brands-Regular, 'Font Awesome \\\\35 Brands'"
       >
         <TSpan x={-9} y={0}>
           {"\uF2AC"}
@@ -611,7 +612,7 @@ export const InstagramIcon = memo((props?: SvgProps) => (
         />
       </Pattern>
     </Defs>
-    <Circle cx={20} cy={20} r={20} fill="url(#prefix__a)" />
+    <Circle cx={20} cy={20} r={20} fill="url(#prefix__a)"/>
   </Svg>
 ));
 
@@ -622,7 +623,7 @@ export const TwitterIcon = memo((props?: SvgProps) => (
     viewBox="0 0 40 40"
     {...props}
   >
-    <Circle data-name="Ellipse 3" cx={20} cy={20} r={20} fill="#34b3f7" />
+    <Circle data-name="Ellipse 3" cx={20} cy={20} r={20} fill="#34b3f7"/>
     <Text
       data-name="\uF099"
       transform="translate(20 27)"
@@ -686,6 +687,26 @@ export const EditIcon = memo((props?: SvgProps) => (
       d="M5.618 5.948H1.432a.276.276 0 010-.551h4.186a.276.276 0 010 .551z"
       fill="#ffde00"
     />
+  </Svg>
+));
+export const PlusIcon = memo((props?: SvgProps) => (
+  <Svg
+    width={20.833}
+    height={20.833}
+    viewBox="0 0 20.833 20.833"
+    {...props}
+  >
+    <G
+      fill="none"
+      stroke="#1b2b5d"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeMiterlimit={10}
+      strokeWidth={2}
+    >
+      <Path d="M1 10.417h18.833"/>
+      <Path data-name="Shape" d="M10.417 1v18.833"/>
+    </G>
   </Svg>
 ));
 
@@ -3469,7 +3490,7 @@ export const EditProfileIcon = memo((props?: SvgProps) => (
     <G
       opacity={0.6}
       fill="none"
-      stroke={props.fill ? props.fill : "#000"}
+      stroke={props.fill !== "" ? props.fill : "#000"}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeMiterlimit={10}
@@ -3477,6 +3498,42 @@ export const EditProfileIcon = memo((props?: SvgProps) => (
     >
       <Path d="M10.256 1l3.366 3.277-9.256 9.011H1v-3.277L10.256 1z"/>
       <Path data-name="Shape" d="M1 17.815h15.279"/>
+    </G>
+  </Svg>
+));
+
+
+export const SelectImgIcon = memo((props?: SvgProps) => (
+  <Svg
+    width={35}
+    height={35}
+    viewBox="0 0 38.103 38.103"
+    {...props}
+  >
+    <Rect
+      width={38.103}
+      height={38.103}
+      rx={19.052}
+      fill="#ecb54b"
+      data-name="Color/\uD83C\uDFA8white"
+    />
+    <G
+      transform="translate(10.298 11.843)"
+      fill="none"
+      stroke="#fff"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeMiterlimit={10}
+      strokeWidth={2}
+    >
+      <Path d="M18.022 12.815a1.62 1.62 0 01-1.638 1.6H1.638A1.62 1.62 0 010 12.815V4a1.62 1.62 0 011.638-1.6h3.277L6.553 0h4.915l1.638 2.4h3.277A1.62 1.62 0 0118.022 4z" />
+      <Ellipse
+        cx={3.277}
+        cy={3.204}
+        rx={3.277}
+        ry={3.204}
+        transform="translate(5.734 4.806)"
+      />
     </G>
   </Svg>
 ));

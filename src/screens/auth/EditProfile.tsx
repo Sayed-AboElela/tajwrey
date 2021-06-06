@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 import Input from "../../components/textInputs/Input";
 import {Colors, ColorWithOpacity, Fonts, Images, Pixel} from "../../constants/styleConstants";
 import {commonStyles} from "../../styles/styles";
-import {DropdownArrowIcon, EditIcon, EditProfileIcon} from "../../assets/icons/SvgIcons";
+import {DropdownArrowIcon, EditProfileIcon, SelectImgIcon} from "../../assets/icons/SvgIcons";
 import Button from "../../components/touchables/Button";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch, useSelector} from "react-redux";
@@ -104,9 +104,15 @@ const EditProfile: FC = () => {
 
       <Content contentContainerStyle={{paddingBottom: 150}}>
 
-        <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 15, marginBottom: 10}}>
+        <View style={{
+          position: 'relative',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 15,
+          marginBottom: 10
+        }}>
           <View style={styles.editIcon}>
-            <EditIcon/>
+            <SelectImgIcon/>
           </View>
           <TouchableOpacity
             style={styles.userImage}
@@ -182,6 +188,7 @@ const EditProfile: FC = () => {
         </View>
         <View style={styles.submitContainer}>
           <Button
+
             title={t('Save')}
             onPress={submitHandler}
             loader={state.loader}
@@ -255,17 +262,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   editIcon: {
-    width: Pixel(35),
-    height: Pixel(35),
-    backgroundColor: Colors.white,
-    borderRadius: 50,
+    // width: Pixel(35),
+    // height: Pixel(35),
+    // backgroundColor: Colors.white,
+    // borderRadius: 50,
     position: 'absolute',
-    right: Pixel(0),
-    top: Pixel(5),
+    right: '55%',
+    bottom: Pixel(10),
     zIndex: 150,
     elevation: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   errorMessage: {
     textAlign: 'center',

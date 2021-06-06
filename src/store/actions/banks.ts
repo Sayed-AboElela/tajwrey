@@ -18,62 +18,130 @@ export const banksApi = (cb: (success?: boolean) => void) => {
       cb(true);
     } catch (error) {
       cb(false);
-      console.log('ordersApi Error', error?.response);
+      console.log('banksApi Error', error?.response);
     }
   };
 };
 
+export const deleteBankHandler = (id: string, cb: (success?: boolean) => void) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      const {data} = await axiosAPI.delete(`banks/${id}/delete`, {
+        data: {id}
+      });
+      console.log('deleteBankHandler response', data)
+      dispatch(saveBanks(data.data));
+      cb(true);
 
-export const SendRequestHandler = (
+      showMessage({
+        message: data.message,
+        type: 'success',
+      });
+
+    } catch (error) {
+      cb(false);
+      console.log('deleteBankHandler Error', error?.response.data);
+    }
+  };
+};
+
+export const AddNewBankHandler = (
   name: string,
-  phone: string,
-  description: string,
-  commission_source: string,
-  type: number,
-  cost: number,
+  account_number: string,
+  owner_name: string,
+  iban: string,
   cb: (success?: boolean) => void,
 ) => {
   return async (dispatch: Dispatch<IDispatch>) => {
     try {
-      const {data} = await axiosAPI.post('requests', {
+      const {data} = await axiosAPI.post('banks', {
         name,
-        phone,
-        description,
-        commission_source,
-        type,
-        cost,
+        account_number,
+        owner_name,
+        iban,
       });
 
-      console.log('SendRequestHandler data', data);
+      console.log('AddNewBankHandler data', data);
 
       dispatch({
-        type: ActionType.SAVE_ORDER_REQUEST_ERRORS,
+        type: ActionType.SAVE_ADD_BANK_ERRORS,
         payload: {},
+      });
+
+      dispatch({
+        type: ActionType.SAVE_BANKS,
+        payload: data.data,
       });
 
       showMessage({
         message: data.message,
         type: 'success',
       });
+
       cb(true);
+
     } catch (error) {
+
       cb(false);
 
-      console.log('SendRequestHandler error', error?.response);
+      console.log('AddNewBankHandler error', error?.response);
 
       dispatch({
-        type: ActionType.SAVE_ORDER_REQUEST_ERRORS,
+        type: ActionType.SAVE_ADD_BANK_ERRORS,
         payload: error?.response.data.data,
       });
-      //
-      // {
-      //   error.response.data.message
-      //     ? showMessage({
-      //       message: error?.response.data.message,
-      //       type: 'danger',
-      //     })
-      //     : null;
-      // }
+
+    }
+  };
+};
+
+export const UpdateBankHandler = (
+  id:string,
+  name: string,
+  account_number: string,
+  owner_name: string,
+  iban: string,
+  cb: (success?: boolean) => void,
+) => {
+  return async (dispatch: Dispatch<IDispatch>) => {
+    try {
+      const {data} = await axiosAPI.post(`banks/${id}`, {
+        name,
+        account_number,
+        owner_name,
+        iban,
+      });
+
+      console.log('AddNewBankHandler data', data);
+
+      dispatch({
+        type: ActionType.SAVE_ADD_BANK_ERRORS,
+        payload: {},
+      });
+
+      dispatch({
+        type: ActionType.SAVE_BANKS,
+        payload: data.data,
+      });
+
+      showMessage({
+        message: data.message,
+        type: 'success',
+      });
+
+      cb(true);
+
+    } catch (error) {
+
+      cb(false);
+
+      console.log('AddNewBankHandler error', error?.response);
+
+      dispatch({
+        type: ActionType.SAVE_ADD_BANK_ERRORS,
+        payload: error?.response.data.data,
+      });
+
     }
   };
 };
